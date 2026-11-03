@@ -523,6 +523,23 @@ details.lplan[open] .lp-open{display:none}
   .lp-page{break-after:page;padding:0 6mm}.lp-page:last-child{break-after:auto}
   .lp-page h1{font-size:11pt;letter-spacing:.1em;text-transform:uppercase;color:#555;margin:0 0 10mm}
 }
+
+/* calmer homepage */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.section-h{align-items:center}
+.section-h .passport{font-size:.8rem;padding:5px 12px}
+.section-h .pp-bar{width:60px}
+.note{text-align:center;margin:20px auto 0;font-size:.88rem}
+.teach-hub{margin-top:44px;display:flex;flex-direction:column;gap:14px}
+.th-head h2{margin:2px 0 0;font-size:clamp(1.5rem,4vw,2rem);font-weight:800}
+.th-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.th-card{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--rc);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.th-card h3{margin:0;font-size:1.2rem;font-weight:800}
+.th-card p{margin:0;color:var(--muted);flex:1}
+.th-card .dopen{align-self:flex-start;text-decoration:none;font-family:var(--display);font-weight:800}
+.th-card .dteaser{display:block;background:none;padding:0}
+.th-card .dteaser p,.th-card .lstats{display:none!important}
+@media (max-width:640px){.th-cards{grid-template-columns:1fr}}
 </style>
 
 <div class="wrap">
@@ -531,12 +548,11 @@ details.lplan[open] .lp-open{display:none}
       <div class="brand"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>Culture Connects</div>
       <h1><span class="hwrap"><span class="hello-word" id="hw">Hello</span></span></h1>
       <p class="hero-sub" id="hsub">We're more alike than we think, and the more we learn, the closer we become! <b>Pick a country</b> to explore the food, music and traditions we share.</p>
-      <p class="hero-teach">Teachers: <a href="#classroom">set up your classroom</a> and welcome every student.</p>
       <div class="hero-actions"><a class="btn-class" href="#classroom">My Classroom</a><a class="btn-teach" href="#teachers">Teachers' Lounge</a></div>
     </div>
     <div class="search">
-      <label class="label" for="q">Find a country</label>
-      <form class="qform" id="qform" role="search"><input id="q" type="search" list="clist" placeholder="Type a country" autocomplete="off" enterkeyhint="go"><button type="submit" class="qgo" aria-label="Open country">Go</button></form>
+      <label class="sr-only" for="q">Find a country</label>
+      <form class="qform" id="qform" role="search"><input id="q" type="search" list="clist" placeholder="Search a country" autocomplete="off" enterkeyhint="go"><button type="submit" class="qgo" aria-label="Open country">Go</button></form>
       <datalist id="clist"></datalist>
       <button class="surprise-link" id="surprise" type="button">Not sure where to start? <u>Surprise me</u></button>
     </div>
@@ -555,27 +571,20 @@ details.lplan[open] .lp-open{display:none}
     </div>
   </div>
   <div class="legend" id="legend" role="group" aria-label="Highlight a region"></div>
-  <div class="pprow"><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Your passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div></div>
 
-  <div class="section-h"><h2>Say hello around the world</h2><span class="label" id="count"></span></div>
+  <div class="section-h"><h2>Say hello around the world</h2><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
   <div class="tiles" id="tiles"></div>
   <button class="see-all" id="seeall" aria-expanded="false"></button>
 
 
-  <p class="note"><b>Before you read:</b> these are common patterns, not rules. Every country holds many regions, religions, generations and families, and people will differ. Use this as a starting point and let people tell you who they are.</p>
+  <p class="note">These are common patterns, not rules. People everywhere are different, so let them tell you who they are.</p>
 
-  <section class="cl-teaser" aria-labelledby="clt-h">
-    <div><span class="label">For teachers</span><h2 id="clt-h">Welcome every student</h2>
-    <p>Add the countries your students come from and get one simple page: how to say hello, names, school, families, food and a warm first-week idea for each.</p></div>
-    <a class="dopen" href="#classroom">Set up my classroom →</a>
-  </section>
-  <section class="lounge" id="teachers">
-    <div class="lounge-top">
-      <div><span class="label">For teachers</span><h2>Teachers' Lounge</h2>
-        <p>Every country has four built-in lessons (K–2, 3–5, 6–8, 9–12) under <b>Teach</b>. Here, teachers share their own lesson plans and talk with each other.</p></div>
-      <div class="bands"><span style="--rc:var(--c-latam)">K–2</span><span style="--rc:var(--c-africa)">3–5</span><span style="--rc:var(--c-mena)">6–8</span><span style="--rc:var(--c-southasia)">9–12</span></div>
+  <section class="teach-hub" id="teachers" aria-labelledby="th-h">
+    <div class="th-head"><span class="label">For teachers</span><h2 id="th-h">Welcome every student</h2></div>
+    <div class="th-cards">
+      <div class="th-card" style="--rc:var(--c-mena)"><h3>My Classroom</h3><p>Add where your students are from. Get greetings, names, school, family and food notes, a holiday calendar and a welcome letter for families.</p><a class="dopen" href="#classroom">Set up my classroom →</a></div>
+      <div class="th-card" style="--rc:var(--c-africa)"><h3>Teachers' Lounge</h3><p>Find lesson plans for every country, share your own, and swap ideas with other teachers.</p><div id="lounge"></div></div>
     </div>
-    <div id="lounge"></div>
   </section>
   <section class="game" id="game">
     <div class="game-top"><span class="label">Play</span><h2>Guess the country</h2><p id="gq">Which country says this?</p></div>
