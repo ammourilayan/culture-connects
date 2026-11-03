@@ -1,6 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>Culture Connects</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <meta name="theme-color" content="#F3F1EC">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Culture Connects">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="description" content="A friendly guide to the people, food, clothing, music and traditions of every country in the world.">
@@ -429,6 +430,9 @@ button.cpill{border:0;cursor:pointer;font:inherit;font-family:var(--display);fon
 
 .pprow{display:flex;justify-content:flex-start;margin-top:10px}
 .pprow .passport{flex:0 1 auto}
+
+.getapp{display:block;margin:0 auto 10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 18px;font:700 .9rem var(--display);cursor:pointer}
+.getapp-tip{margin:0 auto 10px;max-width:320px;font-size:.9rem;color:var(--ink)}
 </style>
 
 <div class="wrap">
@@ -487,7 +491,7 @@ button.cpill{border:0;cursor:pointer;font:inherit;font-family:var(--display);fon
 
 
 
-  <footer>Culture Connects · <span id="fcount"></span> · Everything here is simplified, and people from each culture are always the best guides.</footer>
+  <footer><button class="getapp" id="getapp" type="button" hidden>Get the app</button><p class="getapp-tip" id="getapptip" hidden></p>Culture Connects · <span id="fcount"></span> · Everything here is simplified, and people from each culture are always the best guides.</footer>
 </div>
 
 <div id="tip" hidden></div>
@@ -4912,4 +4916,24 @@ document.addEventListener("submit",async e=>{const f=e.target;if(!f.classList.co
   btn.disabled=false});
 </script>
 
-</body></html>
+
+<script>
+/* app install */
+(function(){
+  const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+  const ok=location.protocol==="https:"&&/explorecultureconnects\.com$|netlify\.app$/.test(location.hostname);
+  if(ok&&"serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});
+  const btn=document.getElementById("getapp"),tip=document.getElementById("getapptip");
+  if(!btn||standalone||!ok)return;
+  let deferred=null;
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;btn.hidden=false});
+  if(ios)btn.hidden=false;
+  btn.onclick=async()=>{
+    if(deferred){deferred.prompt();await deferred.userChoice.catch(()=>{});deferred=null;btn.hidden=true;return}
+    tip.hidden=!tip.hidden;
+    tip.textContent=ios?"In Safari, tap the Share button, then \u201cAdd to Home Screen.\u201d":"Open your browser menu and choose \u201cInstall app\u201d or \u201cAdd to Home screen.\u201d";
+  };
+  addEventListener("appinstalled",()=>{btn.hidden=true;tip.hidden=true});
+})();
+</script></body></html>
