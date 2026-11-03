@@ -1,0 +1,19 @@
+{
+  "name": "culture-connects-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Culture Connects for iPhone and Android",
+  "scripts": {
+    "copy-web": "mkdir -p www && cp ../index.html www/index.html && cp -r ../icons www/icons"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/local-notifications": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}

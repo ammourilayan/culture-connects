@@ -491,7 +491,7 @@ button.cpill{border:0;cursor:pointer;font:inherit;font-family:var(--display);fon
 
 
 
-  <footer><button class="getapp" id="getapp" type="button" hidden>Get the app</button><p class="getapp-tip" id="getapptip" hidden></p>Culture Connects · <span id="fcount"></span> · Everything here is simplified, and people from each culture are always the best guides.</footer>
+  <footer><button class="getapp" id="getapp" type="button" hidden>Get the app</button><button class="getapp" id="dailybtn" type="button" hidden aria-pressed="false">Get a country of the day</button><p class="getapp-tip" id="dailytip" hidden></p><p class="getapp-tip" id="getapptip" hidden></p>Culture Connects · <span id="fcount"></span> · Everything here is simplified, and people from each culture are always the best guides.</footer>
 </div>
 
 <div id="tip" hidden></div>
@@ -4935,5 +4935,33 @@ document.addEventListener("submit",async e=>{const f=e.target;if(!f.classList.co
     tip.textContent=ios?"In Safari, tap the Share button, then \u201cAdd to Home Screen.\u201d":"Open your browser menu and choose \u201cInstall app\u201d or \u201cAdd to Home screen.\u201d";
   };
   addEventListener("appinstalled",()=>{btn.hidden=true;tip.hidden=true});
+})();
+</script>
+<script>
+/* app only: a daily country reminder */
+(function(){
+  const cap=window.Capacitor;if(!cap||!cap.isNativePlatform||!cap.isNativePlatform())return;
+  const LN=cap.Plugins&&cap.Plugins.LocalNotifications;if(!LN)return;
+  const btn=document.getElementById("dailybtn"),tip=document.getElementById("dailytip");btn.hidden=false;
+  let on=false;try{on=localStorage.getItem("cc-daily")==="1"}catch(e){}
+  const label=()=>{btn.textContent=on?"Country of the day: on":"Get a country of the day";btn.setAttribute("aria-pressed",String(on))};
+  const ids=Array.from({length:30},(_,i)=>({id:1000+i}));
+  async function schedule(){
+    try{await LN.cancel({notifications:ids})}catch(e){}
+    if(!on)return;
+    const pool=[...C].sort(()=>Math.random()-.5),t=new Date();
+    await LN.schedule({notifications:pool.slice(0,30).map((c,i)=>({id:1000+i,title:"Today: "+c.name,
+      body:"Say hello: "+firstHi(c)+". Tap to learn more.",
+      schedule:{at:new Date(t.getFullYear(),t.getMonth(),t.getDate()+i+1,9,0)},extra:{id:c.id}}))});
+  }
+  btn.onclick=async()=>{
+    if(!on){const p=await LN.requestPermissions().catch(()=>({display:"denied"}));
+      if(p.display!=="granted"){tip.hidden=false;tip.textContent="To get it, turn on notifications for Culture Connects in your phone's Settings.";return}}
+    on=!on;try{localStorage.setItem("cc-daily",on?"1":"0")}catch(e){}
+    label();tip.hidden=false;tip.textContent=on?"You'll meet a new country every morning at 9.":"Daily countries are off.";
+    schedule();
+  };
+  LN.addListener("localNotificationActionPerformed",e=>{const id=e.notification&&e.notification.extra&&e.notification.extra.id;if(id)location.hash=id});
+  label();schedule();
 })();
 </script></body></html>

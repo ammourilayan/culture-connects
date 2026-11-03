@@ -1,0 +1,45 @@
+name: Build the app
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["index.html", "icons/**", "app/**", ".github/workflows/app.yml"]
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: app } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - run: npm install
+      - run: npm run copy-web
+      - run: npx cap add android
+      - run: npx capacitor-assets generate --android --iconBackgroundColor "#F3F1EC" --splashBackgroundColor "#F3F1EC" --splashBackgroundColorDark "#F3F1EC"
+      - run: npx cap sync android
+      - run: cd android && ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: culture-connects-android-test
+          path: app/android/app/build/outputs/apk/debug/app-debug.apk
+
+  ios:
+    runs-on: macos-15
+    defaults: { run: { working-directory: app } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install
+      - run: npm run copy-web
+      - run: npx cap add ios
+      - run: npx capacitor-assets generate --ios --iconBackgroundColor "#F3F1EC" --splashBackgroundColor "#F3F1EC" --splashBackgroundColorDark "#F3F1EC"
+      - run: npx cap sync ios
+      - name: Check that the iPhone app builds (unsigned until the Apple account is ready)
+        run: |
+          if [ -d ios/App/App.xcworkspace ]; then T="-workspace ios/App/App.xcworkspace"; else T="-project ios/App/App.xcodeproj"; fi
+          xcodebuild $T -scheme App -sdk iphonesimulator -configuration Debug -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO build | tail -20
+          exit ${PIPESTATUS[0]}

@@ -1,0 +1,9 @@
+{
+  "appId": "com.explorecultureconnects.app",
+  "appName": "Culture Connects",
+  "webDir": "www",
+  "backgroundColor": "#F3F1EC",
+  "plugins": {
+    "LocalNotifications": { "iconColor": "#2E9BEA" }
+  }
+}
