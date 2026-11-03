@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Culture Connects Setup Guide</title>
+<style>
+:root{--bg:#F3F1EC;--card:#fff;--ink:#18202B;--muted:#5B6472;--line:#DDD9D0;--accent:#2E9BEA;--soft:#E7F3FC}
+@media (prefers-color-scheme:dark){:root{--bg:#0E141C;--card:#18212C;--ink:#EEF1F5;--muted:#A3ADBA;--line:#2A3542;--soft:#15283A}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:720px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:2rem;line-height:1.15;margin:0 0 6px}h2{font-size:1.3rem;margin:0 0 4px}
+.lead{color:var(--muted);margin:0 0 22px}
+.part{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 8px;margin:0 0 16px}
+.part .time{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+ol{padding-left:1.3em;margin:0 0 10px}li{margin:0 0 10px}
+code{background:var(--soft);padding:1px 6px;border-radius:6px;font-size:.92em;word-break:break-word}
+.tip{background:var(--soft);border-radius:12px;padding:10px 14px;margin:0 0 12px;font-size:.95rem}
+b{font-weight:700}
+</style></head><body><main>
+<h1>Putting Culture Connects on your own website</h1>
+<p class="lead">About an hour from start to finish. Do the parts in order. If anything looks different from what's described here, take a screenshot and send it to Claude.</p>
+
+<div class="part"><h2>What's in this folder</h2>
+<ol>
+<li><b>index.html</b>: the whole website.</li>
+<li><b>setup.sql</b>: a one-time setup script for the Teachers' Lounge.</li>
+<li><b>SETUP-GUIDE.html</b>: this guide.</li>
+</ol></div>
+
+<div class="part"><h2>Part 1 · Get your .com</h2><p class="time">About 10 minutes · about $10–15 a year</p>
+<ol>
+<li>Go to <b>namecheap.com</b> or <b>porkbun.com</b> and search for <code>cultureconnects.com</code>.</li>
+<li>If it's taken, try one of the backups, like <code>thecultureconnects.com</code> or <code>cultureconnectsworld.com</code>.</li>
+<li>Buy it. Turn <b>off</b> extras like hosting, email or "site builder." You don't need them.</li>
+</ol>
+<div class="tip">Keep that tab open. You'll come back to it in Part 4.</div></div>
+
+<div class="part"><h2>Part 2 · Set up the Teachers' Lounge (Supabase)</h2><p class="time">About 15 minutes · free</p>
+<ol>
+<li>Go to <b>supabase.com</b>, tap <b>Start your project</b>, and sign up.</li>
+<li>Tap <b>New project</b>. Name it <code>Culture Connects</code>, make up a database password (save it somewhere safe), choose the region <b>West US</b>, and tap <b>Create</b>. Give it about 2 minutes to finish.</li>
+<li>In the left menu, open <b>SQL Editor</b> and tap <b>New query</b>.</li>
+<li>Open <b>setup.sql</b>, copy everything in it, paste it into the editor, and tap <b>Run</b>. You should see "Success."</li>
+<li>Go to <b>Project Settings → API</b> (sometimes called <b>Data API</b>). Copy two things: the <b>Project URL</b> and the <b>anon public</b> key.</li>
+<li><b>Send both to Claude</b>, and Claude will put them into your site for you. (These two are meant to be public, so they're safe to share. Never share the <i>service_role</i> key or your database password.)</li>
+<li>Go to <b>Authentication → URL Configuration</b>. Set <b>Site URL</b> to your new address, for example <code>https://cultureconnects.com</code>. Under <b>Redirect URLs</b>, add <code>https://cultureconnects.com/**</code>.</li>
+</ol>
+<div class="tip"><b>Good to know:</b> Supabase's built-in email only sends a few sign-in emails per hour. That's fine while you test. Before you invite lots of teachers, connect a free email sender (for example <b>Resend</b>) under <b>Authentication → Emails → SMTP Settings</b>, and Claude can walk you through it.</div></div>
+
+<div class="part"><h2>Part 3 · Put the site online (Netlify)</h2><p class="time">About 10 minutes · free</p>
+<ol>
+<li>Go to <b>netlify.com</b> and sign up. Using your Google account is easiest.</li>
+<li>Tap <b>Add new site → Deploy manually</b>.</li>
+<li>Drag the <b>whole folder</b> (the one with index.html) onto the page. This works best on a computer.</li>
+<li>In a few seconds you'll get a link like <code>something-random.netlify.app</code>. Open it. Your site is live!</li>
+<li>Optional: in <b>Site configuration → Change site name</b>, rename it to something like <code>cultureconnects</code>.</li>
+</ol></div>
+
+<div class="part"><h2>Part 4 · Connect your .com</h2><p class="time">About 10 minutes, then up to a day to take effect</p>
+<ol>
+<li>In Netlify, open your site and go to <b>Domain management → Add a domain</b>. Type your .com and follow the steps.</li>
+<li>Netlify gives you a short list of <b>name servers</b> (they look like <code>dns1.p01.nsone.net</code>).</li>
+<li>Go back to where you bought the .com, find <b>Nameservers</b>, choose <b>Custom</b>, paste in Netlify's, and save.</li>
+<li>Wait. It usually works within an hour, and sometimes it takes up to a day. Netlify adds the secure padlock (https) automatically.</li>
+</ol></div>
+
+<div class="part"><h2>Part 5 · Make yourself the moderator</h2><p class="time">About 3 minutes</p>
+<ol>
+<li>On your live site, scroll to <b>Teachers' Lounge</b>, enter your name and email, and tap the sign-in link in your email.</li>
+<li>Back in Supabase, open <b>SQL Editor → New query</b> and paste this, using your own email:<br>
+<code>insert into public.admins (user_id) select id from auth.users where email = 'you@example.com' on conflict do nothing;</code></li>
+<li>Tap <b>Run</b>. Now you'll see a <b>Delete</b> button on every lesson and post, so you can remove anything that doesn't belong.</li>
+</ol></div>
+
+<div class="part"><h2>Updating the site later</h2>
+<ol>
+<li>Ask Claude for changes, and you'll get a new <b>index.html</b>.</li>
+<li>In Netlify, open your site → <b>Deploys</b>, and drag the folder in again. That's it. Your lessons and posts stay safe in Supabase.</li>
+</ol></div>
+</main></body></html>
