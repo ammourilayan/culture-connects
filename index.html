@@ -4097,9 +4097,9 @@ const featured=["palestine","mexico","japan","nigeria","india","brazil","lebanon
 document.querySelectorAll(".tile").forEach(tl=>{if(!featured.includes(tl.dataset.id))tl.classList.add("extra")});
 const tilesEl=$("#tiles");featured.slice().reverse().forEach(id=>{const tl=tilesEl.querySelector(`.tile[data-id="${id}"]`);if(tl)tilesEl.prepend(tl)});
 tilesEl.classList.add("collapsed");
-const seeAll=$("#seeall");const setSeeAll=()=>{const col=tilesEl.classList.contains("collapsed");seeAll.textContent=col?`See all ${C.length} countries`:"Show fewer";seeAll.setAttribute("aria-expanded",String(!col))};setSeeAll();
+const seeAll=$("#seeall");const setSeeAll=()=>{const col=tilesEl.classList.contains("collapsed");seeAll.textContent=col?`See all ${C.length} places`:"Show fewer";seeAll.setAttribute("aria-expanded",String(!col))};setSeeAll();
 seeAll.onclick=()=>{tilesEl.classList.toggle("collapsed");setSeeAll()};
-$("#count").textContent=`${C.length} countries so far`;$("#fcount").textContent=`${C.length} countries`;
+const NCO=C.filter(c=>!c.territory).length,NTE=C.length-NCO,PLC=NTE?`${NCO} countries and ${NTE} territories`:`${NCO} countries`;$("#count").textContent=`${PLC} so far`;$("#fcount").textContent=PLC;
 $("#clist").innerHTML=sorted.map(c=>`<option value="${esc(c.name)}">`).join("");
 function findCountry(v){v=v.trim().toLowerCase();if(!v)return null;
   return C.find(x=>x.name.toLowerCase()===v)||C.find(x=>x.name.toLowerCase().startsWith(v))||C.find(x=>x.name.toLowerCase().includes(v))||C.find(x=>JSON.stringify(x).toLowerCase().includes(v))}
@@ -4250,7 +4250,7 @@ function markSel(id){if(!g)return;g.querySelectorAll(".country").forEach(p=>p.cl
 function open(id){const c=byId[id];if(!c)return;cur=c;layer=0;if(drawer.hidden)lastFocus=document.activeElement;
   drawer.style.setProperty("--rc",rc(c));$("#ghost").textContent=firstHi(c);
   const fresh=stampVisit(id);$("#dstamp").hidden=false;$("#dstamp").textContent=fresh?"✓ New passport stamp!":"✓ Stamped";
-  $("#dregion").textContent=c.region;$("#dname").textContent=c.name;$("#layers").hidden=false;
+  $("#dregion").textContent=c.territory?`${c.region} · ${c.territory}`:c.region;$("#dname").textContent=c.name;$("#layers").hidden=false;
   renderLayer();show();markSel(id);
   try{if(location.hash!=="#"+id)history.replaceState(null,"","#"+id)}catch(e){}}
 function openSoon(name){cur=null;if(drawer.hidden)lastFocus=document.activeElement;
