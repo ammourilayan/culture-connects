@@ -4186,7 +4186,7 @@ function finish(){
 const narrow=matchMedia("(max-width:600px)");
 function apply(){if(!g)return;g.setAttribute("transform",`translate(${T.x},${T.y}) scale(${T.k})`);
   const r=(VW/(narrow.matches?120:170))/Math.sqrt(T.k);pinsG&&pinsG.querySelectorAll("circle").forEach(c=>c.setAttribute("r",c.classList.contains("hit")?r*2.2:r));
-  svgEl.style.touchAction=T.k<=1.01?"pan-y":"none";
+  svgEl.style.touchAction="pan-y";
   const fs=(VW/(narrow.matches?55:75))/T.k;pinsG&&pinsG.querySelectorAll(".plabel").forEach(tx=>{tx.setAttribute("font-size",fs);tx.setAttribute("dy",-r*1.6)});
   svgEl.classList.toggle("zoomed",T.k>=2.2)}
 function clamp(){T.k=Math.max(1,Math.min(12,T.k));T.x=Math.min(0,Math.max(VW-VW*T.k,T.x));T.y=Math.min(0,Math.max(VH-VH*T.k,T.y))}
@@ -4212,12 +4212,12 @@ const pts=new Map();let start=null,moved=0,pinch=0;
 const toSvg=(x,y)=>{const r=svgEl.getBoundingClientRect();return [(x-r.left)*VW/r.width,(y-r.top)*VH/r.height]};
 const dist=()=>{const [a,b]=[...pts.values()];return Math.hypot(a.x-b.x,a.y-b.y)};
 const hintEl=$("#maphint"),coarse=matchMedia("(pointer:coarse)").matches;
-const HINT=coarse?"Pinch to zoom":"Drag to move · Ctrl + scroll to zoom";
+const HINT=coarse?"Use two fingers to move or zoom":"Drag to move · Pinch or Ctrl + scroll to zoom";
 hintEl.textContent=HINT;let hintT=null;
 function hintGone(){hintEl.classList.add("gone")}
 function hintFlash(msg){hintEl.textContent=msg;hintEl.classList.remove("gone");hintEl.classList.add("flash");clearTimeout(hintT);hintT=setTimeout(()=>{hintEl.classList.remove("flash");hintGone()},1800)}
 svgEl.addEventListener("wheel",e=>{if(!g)return;
-  if(!(e.ctrlKey||e.metaKey)){if(T.k<=1.01){hintFlash(navigator.platform&&/Mac/.test(navigator.platform)?"Hold ⌘ and scroll to zoom":"Hold Ctrl and scroll to zoom");return}}
+  if(!(e.ctrlKey||e.metaKey)){const now=Date.now();if(!window.__hintAt||now-window.__hintAt>8000){window.__hintAt=now;hintFlash(navigator.platform&&/Mac/.test(navigator.platform)?"Pinch or hold ⌘ and scroll to zoom":"Hold Ctrl and scroll to zoom")}return}
   e.preventDefault();hintGone();const [cx,cy]=toSvg(e.clientX,e.clientY);const f=Math.exp(-Math.max(-60,Math.min(60,e.deltaY))*(e.ctrlKey&&Math.abs(e.deltaY)<20?0.02:0.006));zoomAt(f,cx,cy)},{passive:false});
 svgEl.addEventListener("dblclick",e=>{if(!g)return;e.preventDefault();hintGone();const [cx,cy]=toSvg(e.clientX,e.clientY);const k=Math.min(12,T.k*2);animateTo(k,cx-(cx-T.x)*(k/T.k),cy-(cy-T.y)*(k/T.k))});
 svgEl.addEventListener("keydown",e=>{if(!g)return;const st=VW/12;let used=true;
@@ -4227,10 +4227,10 @@ svgEl.addEventListener("keydown",e=>{if(!g)return;const st=VW/12;let used=true;
 svgEl.addEventListener("pointerdown",e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pts.size===2)hintGone();
   if(pts.size===1){start={x:e.clientX,y:e.clientY,tx:T.x,ty:T.y,target:e.target};moved=0}else if(pts.size===2){pinch=dist();start=null}});
 window.addEventListener("pointermove",e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if(pts.size===2&&pinch){const d=dist(),[a,b]=[...pts.values()],[cx,cy]=toSvg((a.x+b.x)/2,(a.y+b.y)/2);zoomAt(d/pinch,cx,cy);pinch=d;return}
+  if(pts.size===2&&pinch){const d=dist(),[a,b]=[...pts.values()],[cx,cy]=toSvg((a.x+b.x)/2,(a.y+b.y)/2);if(window.__mid){T.x+=cx-window.__mid[0];T.y+=cy-window.__mid[1]}window.__mid=[cx,cy];zoomAt(d/pinch,cx,cy);pinch=d;return}
   if(start){const dx=e.clientX-start.x,dy=e.clientY-start.y;moved=Math.max(moved,Math.hypot(dx,dy));
     if(moved>5){const r=svgEl.getBoundingClientRect();T.x=start.tx+dx*VW/r.width;T.y=start.ty+dy*VH/r.height;clamp();apply();$("#tip").hidden=true}}});
-function endPtr(e,cancel){if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);if(pts.size<2)pinch=0;
+function endPtr(e,cancel){if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);if(pts.size<2){pinch=0;window.__mid=null}
   if(!cancel&&start&&moved<=5&&pts.size===0){const t=start.target;if(t&&t.dataset&&t.dataset.name){if(t.dataset.id){zoomToId(t.dataset.id);open(t.dataset.id)}else openSoon(t.dataset.name)}}
   if(pts.size===0)start=null}
 window.addEventListener("pointerup",e=>endPtr(e,false));window.addEventListener("pointercancel",e=>endPtr(e,true));
