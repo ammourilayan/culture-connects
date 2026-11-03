@@ -4910,7 +4910,7 @@ document.addEventListener("submit",async e=>{const f=e.target;if(!f.classList.co
   const st=f.querySelector(".status"),btn=f.querySelector("button[type=submit]"),fd=new FormData(f);
   const email=String(fd.get("email")||"").trim(),name=String(fd.get("name")||"").trim();if(!email)return;
   btn.disabled=true;st.textContent="Sending…";
-  try{const r=await SB.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname+"#teachers",data:{name}}});if(r.error)throw r.error;
+  try{const r=await SB.auth.signInWithOtp({email,options:{emailRedirectTo:(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()?"https://explorecultureconnects.com/":location.origin+location.pathname)+"#teachers",data:{name}}});if(r.error)throw r.error;
     st.textContent="Check your email for your sign-in link.";}
   catch(err){st.textContent=/rate|limit/i.test((err&&err.message)||"")?"Too many sign-ins right now. Please try again in a little while.":"That didn't send. Check the email and try again."}
   btn.disabled=false});
