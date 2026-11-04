@@ -4827,7 +4827,10 @@ async function onSession(session){
     try{const r=await SB.rpc("is_admin");iCanEdit=!!r.data}catch(e){}
   }
   await loadNames()}
+function loadSB(src){return new Promise(r=>{const t=document.createElement("script");t.src=src;t.onload=()=>r(!!window.supabase);t.onerror=()=>r(false);document.head.appendChild(t)})}
 async function initComm(){
+  if(/^https:\/\//.test(SUPABASE_URL)&&!window.supabase){
+    for(const u of ["https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.js","https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.45.4/supabase.min.js"]){if(await loadSB(u))break}}
   if(!/^https:\/\//.test(SUPABASE_URL)||!window.supabase){commState="off";refreshAll();return}
   try{
     SB=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);DB=true;ASSETS=true;
