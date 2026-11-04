@@ -564,13 +564,24 @@ footer a{color:inherit;text-underline-offset:3px}
 @media print{body.lesson-on>*:not(#lessonprint){display:none!important}
   body.lesson-on #lessonprint{display:block;color:#000;background:#fff;font-size:12.5pt;line-height:1.5;padding:0 6mm}
   #lessonprint h1{font-size:20pt;margin:2mm 0 4mm}#lessonprint .lpp-top{font-size:9.5pt;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:0}}
+
+/* culture first, greetings as a touch */
+.hero-hi{margin:6px 0 4px;font-family:var(--display);font-weight:800;font-size:clamp(1.05rem,2.6vw,1.35rem)}
+.hero-hi .hello-word{font-size:inherit}
+.hero-hi-tail{color:var(--muted);font-weight:700}
+.hero h1{font-size:clamp(2.1rem,6.5vw,4rem);line-height:1.04;margin:0 0 4px;color:var(--ink)}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left}
+.tile .tn{font-family:var(--display);font-weight:800;font-size:1.15rem;line-height:1.15;color:var(--ink)}
+.tile .tr{font-size:.8rem;color:var(--muted)}
+.tile .thi{margin-top:auto;padding-top:6px;font-family:var(--display);font-weight:800;font-size:.85rem;color:color-mix(in srgb,var(--rc) 75%,var(--ink));overflow-wrap:anywhere}
 </style>
 
 <div class="wrap">
   <header class="hero">
     <div>
       <div class="brand"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>Culture Connects</div>
-      <h1><span class="hwrap"><span class="hello-word" id="hw">Hello</span></span></h1>
+      <p class="hero-hi"><span class="hello-word" id="hw">Hello</span> <span class="hero-hi-tail">from 213 places</span></p>
+      <h1>Discover the cultures<br>that connect us</h1>
       <p class="hero-sub" id="hsub">We're more alike than we think, and the more we learn, the closer we become! <b>Pick a country</b> to explore the food, music and traditions we share.</p>
       <div class="hero-actions"><a class="btn-class" href="#classroom">My Classroom</a><a class="btn-teach" href="#teachers">Teachers' Lounge</a></div>
     </div>
@@ -596,7 +607,7 @@ footer a{color:inherit;text-underline-offset:3px}
   </div>
   <div class="legend" id="legend" role="group" aria-label="Highlight a region"></div>
 
-  <div class="section-h"><h2>Say hello around the world</h2><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
+  <div class="section-h"><h2>Explore a country</h2><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
   <div class="tiles" id="tiles"></div>
   <button class="see-all" id="seeall" aria-expanded="false"></button>
 
@@ -4502,7 +4513,7 @@ const ORIG30=["afghanistan", "brazil", "china", "colombia", "cuba", "dominican-r
 C.forEach(c=>{const d=DEEP[c.id];if(!d)return;const x=c.x||X[c.id];if(d.norms)c.norms=d.norms;if(d.talk)c.talk=d.talk;if(x){if(d.holidays)x.holidays=d.holidays;if(d.money&&/tip/i.test(d.money))x.money=d.money}if(d.lessons&&d.lessons.length===4&&!ORIG30.includes(c.id)){c.lessons=d.lessons;L[c.id]=d.lessons}if(d.hist_add&&c.hist&&!c.hist.some(h=>h[0]==d.hist_add[0]))c.hist.push(d.hist_add)});
 const sorted=[...C].sort((a,b)=>a.name.localeCompare(b.name));
 $("#tiles").innerHTML=sorted.map(c=>`<button class="tile" data-id="${c.id}" data-region="${esc(c.region)}" style="--rc:${rc(c)}">
-  <span class="tw${firstHi(c).length>11?" long":""}">${esc(firstHi(c))}</span><span><span class="tn">${esc(c.name)}</span><br><span class="tr">${esc(c.foods[0])} · ${esc(c.region)}</span></span></button>`).join("");
+  <span class="tn">${esc(c.name)}</span><span class="tr">${esc(c.foods[0])} · ${esc(c.region)}</span><span class="thi">${esc(firstHi(c))}</span></button>`).join("");
 $("#tiles").addEventListener("click",e=>{const b=e.target.closest(".tile");if(b){zoomToId(b.dataset.id);open(b.dataset.id)}});
 const featured=["palestine","mexico","japan","nigeria","india","brazil","lebanon","philippines","ethiopia","south-korea"];
 document.querySelectorAll(".tile").forEach(tl=>{if(!featured.includes(tl.dataset.id))tl.classList.add("extra")});
