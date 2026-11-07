@@ -4576,7 +4576,7 @@ $("#qform").addEventListener("submit",e=>{e.preventDefault();const a=document.qu
     else{const starts=C.filter(c=>nm(c.name).startsWith(v)),inc=C.filter(c=>!nm(c.name).startsWith(v)&&nm(c.name).includes(v));
       items=[...starts,...inc];if(items.length<3&&v.length>3)items=items.concat(C.filter(c=>!items.includes(c)&&(c.foods||[]).some(f=>nm(f).includes(v))));items=items.slice(0,7);if(!items.length){const f=findCountry(q.value);if(f)items=[f]}}
     sel=items.length&&v?0:-1;
-    L.innerHTML=(v?"":`<li class="qhint" aria-hidden="true">Popular places</li>`)+items.map((c,i)=>`<li role="option" id="qo${i}" data-id="${c.id}" aria-selected="${i===sel}" style="--rc:${rc(c)}"><span class="qdot"></span><span class="qn">${esc(c.name)}</span><span class="qm">${esc((c.foods||[])[0]||"")} · ${esc(c.region)}</span></li>`).join("")+(v&&!items.length?`<li class="qhint">No match yet. Try another spelling.</li>`:"");
+    L.innerHTML=(v?"":`<li class="qhint" aria-hidden="true">Popular places</li>`)+items.map((c,i)=>`<li role="option" id="qo${i}" data-id="${c.id}" aria-selected="${i===sel}" style="--rc:${rc(c)}"><span class="qdot"></span><span class="qn">${esc(c.name)}</span><span class="qm">${esc(c.region)}</span></li>`).join("")+(v&&!items.length?`<li class="qhint">No match yet. Try another spelling.</li>`:"");
     L.hidden=false;q.setAttribute("aria-expanded","true")}
   function hide(){L.hidden=true;q.setAttribute("aria-expanded","false")}
   function mark(){L.querySelectorAll("[role=option]").forEach((li,i)=>li.setAttribute("aria-selected",String(i===sel)));if(sel>=0)q.setAttribute("aria-activedescendant","qo"+sel)}
