@@ -621,6 +621,13 @@ footer a{color:inherit;text-underline-offset:3px}
 .section-h h2{font-size:clamp(2.4rem,9.5vw,3.6rem);line-height:1;margin:0}
 .section-h .sh-sub{margin:4px 0 0;line-height:1.35}
 .section-h{gap:10px}
+
+/* one cohesive section style */
+.section-h h2,.th-head h2,.game-top h2{font-family:var(--display);font-size:clamp(2.2rem,8.5vw,3.4rem)!important;font-weight:800;line-height:1;letter-spacing:-.025em;margin:0;color:var(--ink)}
+.sec-eye{display:block;margin:0 0 6px;font:800 .78rem var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--c-mena)}
+.th-head .sh-sub,.game-top p{margin:6px 0 0;color:var(--muted);font-size:1rem;line-height:1.35}
+.section-h,.teach-hub,.game{margin-top:64px!important}
+.section-h{align-items:flex-end}
 </style>
 
 <div class="wrap">
@@ -652,7 +659,7 @@ footer a{color:inherit;text-underline-offset:3px}
   </div>
   <div class="legend" id="legend" role="group" aria-label="Highlight a region"></div>
 
-  <div class="section-h"><div><h2>Explore a country</h2><p class="sh-sub">Tap any country to discover its food, clothing, stories and everyday life.</p></div><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
+  <div class="section-h"><div><span class="label sec-eye">Around the world</span><h2>Explore a country</h2><p class="sh-sub">Tap any country to discover its food, clothing, stories and everyday life.</p></div><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
   <div class="tiles" id="tiles"></div>
   <button class="see-all" id="seeall" aria-expanded="false"></button>
 
@@ -660,14 +667,14 @@ footer a{color:inherit;text-underline-offset:3px}
   <p class="note">These are gentle starting points, not rules. Everyone is wonderfully different, so the best way to learn is to ask and listen.</p>
 
   <section class="teach-hub" id="teachers" aria-labelledby="th-h">
-    <div class="th-head"><span class="label">For teachers</span><h2 id="th-h">Welcome every student</h2></div>
+    <div class="th-head"><span class="label sec-eye">For teachers</span><h2 id="th-h">Welcome every student</h2><p class="sh-sub">Tools to help you welcome students and families from around the world.</p></div>
     <div class="th-cards">
       <div class="th-card" style="--rc:var(--c-mena)"><h3>My Classroom</h3><p>Add where your students are from. Get greetings, names, school, family and food notes, a holiday calendar and a welcome letter for families.</p><a class="dopen" href="#classroom">Set up my classroom →</a></div>
       <div class="th-card" style="--rc:var(--c-africa)"><h3>Teachers' Lounge</h3><p>Find lesson plans for every country, share your own, and swap ideas with other teachers.</p><div id="lounge"></div></div>
     </div>
   </section>
   <section class="game" id="game">
-    <div class="game-top"><span class="label">Play</span><h2>Guess the country</h2><p id="gq">Which country says this?</p></div>
+    <div class="game-top"><span class="label sec-eye">Play</span><h2>Guess the country</h2><p id="gq">Which country says this?</p></div>
     <div class="game-word" id="gword">…</div>
     <div class="game-opts" id="gopts"></div>
     <div class="game-foot"><span id="gmsg" role="status"></span><span class="score" id="gscore">Score 0</span><button class="small" id="gnext">Next question</button></div>
