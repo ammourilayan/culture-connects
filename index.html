@@ -581,6 +581,39 @@ footer a{color:inherit;text-underline-offset:3px}
 .topnav .tn-class{background:color-mix(in srgb,var(--c-mena) 14%,var(--surface));color:color-mix(in srgb,var(--c-mena) 70%,var(--ink))}
 .hero{padding-top:6px}
 .hero-sub{margin-bottom:18px}
+
+/* search dropdown */
+.qform{position:relative}
+.qlist{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:30;list-style:none;margin:0;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.14);max-height:min(60vh,380px);overflow:auto}
+.qlist[hidden]{display:none}
+.qlist [role=option]{display:grid;grid-template-columns:12px 1fr;column-gap:10px;align-items:center;padding:9px 10px;border-radius:10px;cursor:pointer}
+.qlist [role=option][aria-selected=true],.qlist [role=option]:hover{background:var(--soft)}
+.qdot{width:10px;height:10px;border-radius:50%;background:var(--rc);grid-row:span 2}
+.qn{font:800 1rem var(--display);color:var(--ink)}
+.qm{font:500 .8rem var(--display);color:var(--muted)}
+.qhint{padding:6px 10px;font:700 .72rem var(--display);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+/* bigger tab icons */
+.layers button .ico{width:28px;height:28px}
+.layers button{gap:4px;padding:9px 2px;font-size:.74rem}
+/* trusted lesson sources */
+.ml-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ml{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.ml b{font:800 .92rem var(--display)}.ml span{font-size:.8rem;color:var(--muted)}
+.ml:hover{border-color:var(--rc)}
+@media (max-width:440px){.ml-grid{grid-template-columns:1fr}}
+/* stories */
+.tales{margin:8px 0 0;padding-left:1.1em}.tales li{margin:0 0 6px}
+.proverb{margin:10px 0 0;padding:10px 14px;border-left:4px solid var(--rc);background:var(--soft);border-radius:0 12px 12px 0}
+.proverb p{margin:0;font:800 1rem var(--display)}.proverb footer{margin-top:2px;color:var(--muted);font-size:.9rem}
+.story-read{margin-top:10px}
+/* calmer, clearly clickable cards */
+.sh-sub{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+.tile{background:var(--surface)!important;border:1px solid var(--line)!important;border-top:5px solid var(--rc)!important;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform .15s,box-shadow .15s}
+.tile:hover,.tile:focus-visible{transform:translateY(-2px)!important;box-shadow:0 8px 20px rgba(0,0,0,.10)}
+.tile::before,.tile::after{display:none!important}
+.tfoot{margin-top:auto;padding-top:6px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%}
+.tile .thi{margin:0;padding:0}
+.tgo{font:800 .78rem var(--display);color:color-mix(in srgb,var(--rc) 70%,var(--ink));white-space:nowrap}
 </style>
 
 <div class="wrap">
@@ -592,7 +625,7 @@ footer a{color:inherit;text-underline-offset:3px}
     </div>
     <div class="search">
       <label class="sr-only" for="q">Find a country</label>
-      <form class="qform" id="qform" role="search"><input id="q" type="search" list="clist" placeholder="Search a country" autocomplete="off" enterkeyhint="go"><button type="submit" class="qgo" aria-label="Open country">Go</button></form>
+      <form class="qform" id="qform" role="search"><input id="q" type="search" placeholder="Search a country" autocomplete="off" enterkeyhint="go" role="combobox" aria-expanded="false" aria-controls="qlist" aria-autocomplete="list"><ul class="qlist" id="qlist" role="listbox" hidden></ul><button type="submit" class="qgo" aria-label="Open country">Go</button></form>
       <datalist id="clist"></datalist>
       <button class="surprise-link" id="surprise" type="button">Not sure where to start? <u>Surprise me</u></button>
     </div>
@@ -612,7 +645,7 @@ footer a{color:inherit;text-underline-offset:3px}
   </div>
   <div class="legend" id="legend" role="group" aria-label="Highlight a region"></div>
 
-  <div class="section-h"><h2>Explore a country</h2><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
+  <div class="section-h"><div><h2>Explore a country</h2><p class="sh-sub">Tap a card to see the food, clothing, daily life, stories and lessons.</p></div><div class="passport" id="passport" aria-live="polite"><span class="pp-label">Passport</span><span class="pp-bar"><i id="ppfill"></i></span><span id="pptext">0 stamps</span></div><span class="sr-only" id="count"></span></div>
   <div class="tiles" id="tiles"></div>
   <button class="see-all" id="seeall" aria-expanded="false"></button>
 
@@ -651,7 +684,7 @@ footer a{color:inherit;text-underline-offset:3px}
     <button role="tab" data-l="1"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M8 7.5c0-1.4.9-1.9.9-3.2M12 7.5c0-1.4.9-1.9.9-3.2M16 7.5c0-1.4.9-1.9.9-3.2"/></svg></i>Food</button>
     <button role="tab" data-l="2"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 3 3 6l2 5 3-1.2V21h8V9.8L19 11l2-5-5.5-3a3.5 3.5 0 0 1-7 0z"/></svg></i>Clothing</button>
     <button role="tab" data-l="3"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></i>Daily life</button>
-    <button role="tab" data-l="4"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></i>Arts</button>
+    <button role="tab" data-l="4"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></i>Arts &amp; stories</button>
     <button role="tab" data-l="5"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1L3.5 8.5"/><path d="M3.5 3.5v5h5"/><path d="M12 7.5V12l3 2"/></svg></i>History</button>
     <button role="tab" data-l="6"><i><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 5H8a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2.5z"/><path d="M21.5 5H16a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h6.5z"/></svg></i>Teach</button>
   </div>
@@ -4518,7 +4551,7 @@ const ORIG30=["afghanistan", "brazil", "china", "colombia", "cuba", "dominican-r
 C.forEach(c=>{const d=DEEP[c.id];if(!d)return;const x=c.x||X[c.id];if(d.norms)c.norms=d.norms;if(d.talk)c.talk=d.talk;if(x){if(d.holidays)x.holidays=d.holidays;if(d.money&&/tip/i.test(d.money))x.money=d.money}if(d.lessons&&d.lessons.length===4&&!ORIG30.includes(c.id)){c.lessons=d.lessons;L[c.id]=d.lessons}if(d.hist_add&&c.hist&&!c.hist.some(h=>h[0]==d.hist_add[0]))c.hist.push(d.hist_add)});
 const sorted=[...C].sort((a,b)=>a.name.localeCompare(b.name));
 $("#tiles").innerHTML=sorted.map(c=>`<button class="tile" data-id="${c.id}" data-region="${esc(c.region)}" style="--rc:${rc(c)}">
-  <span class="tn">${esc(c.name)}</span><span class="tr">${esc(c.foods[0])} · ${esc(c.region)}</span><span class="thi">${esc(firstHi(c))}</span></button>`).join("");
+  <span class="tn">${esc(c.name)}</span><span class="tr">${esc(c.foods[0])} · ${esc(c.region)}</span><span class="tfoot"><span class="tgo" aria-hidden="true">Explore →</span></span></button>`).join("");
 $("#tiles").addEventListener("click",e=>{const b=e.target.closest(".tile");if(b){zoomToId(b.dataset.id);open(b.dataset.id)}});
 const featured=["palestine","mexico","japan","nigeria","india","brazil","lebanon","philippines","ethiopia","south-korea"];
 document.querySelectorAll(".tile").forEach(tl=>{if(!featured.includes(tl.dataset.id))tl.classList.add("extra")});
@@ -4535,7 +4568,23 @@ function findCountry(v){v=nrm(v||"");if(!v)return null;const nm=x=>nrm(x.name);
   return C.find(x=>nm(x)===v)||(ALIAS[v]&&byId[ALIAS[v]])||C.find(x=>(x.map||[]).some(m=>nrm(m)===v))||C.find(x=>nm(x).startsWith(v))||(v.length>3&&C.find(x=>nm(x).includes(v)))
     ||(v.length>4&&C.map(x=>[x,edits(v,nm(x))]).filter(([,d])=>d<=2).sort((a,b)=>a[1]-b[1]).map(([x])=>x)[0])||null}
 function goSearch(){const q=$("#q");const c=findCountry(q.value);if(c){zoomToId(c.id);open(c.id);q.blur()}else if(q.value.trim()){q.setCustomValidity("Not in the guide yet. Try another country.");q.reportValidity();setTimeout(()=>q.setCustomValidity(""),2500)}}
-$("#qform").addEventListener("submit",e=>{e.preventDefault();goSearch()});
+$("#qform").addEventListener("submit",e=>{e.preventDefault();const a=document.querySelector("#qlist [aria-selected=true]");if(a&&!$("#qlist").hidden){pickQ(a.dataset.id)}else goSearch()});
+(function(){const q=$("#q"),L=$("#qlist");let items=[],sel=-1;
+  const nm=x=>x.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  function show(){const v=nm(q.value.trim());
+    if(!v){items=[...C].filter(c=>featured.includes(c.id)).slice(0,6)}
+    else{const starts=C.filter(c=>nm(c.name).startsWith(v)),inc=C.filter(c=>!nm(c.name).startsWith(v)&&nm(c.name).includes(v));
+      items=[...starts,...inc];if(items.length<3&&v.length>3)items=items.concat(C.filter(c=>!items.includes(c)&&(c.foods||[]).some(f=>nm(f).includes(v))));items=items.slice(0,7);if(!items.length){const f=findCountry(q.value);if(f)items=[f]}}
+    sel=items.length&&v?0:-1;
+    L.innerHTML=(v?"":`<li class="qhint" aria-hidden="true">Popular places</li>`)+items.map((c,i)=>`<li role="option" id="qo${i}" data-id="${c.id}" aria-selected="${i===sel}" style="--rc:${rc(c)}"><span class="qdot"></span><span class="qn">${esc(c.name)}</span><span class="qm">${esc((c.foods||[])[0]||"")} · ${esc(c.region)}</span></li>`).join("")+(v&&!items.length?`<li class="qhint">No match yet. Try another spelling.</li>`:"");
+    L.hidden=false;q.setAttribute("aria-expanded","true")}
+  function hide(){L.hidden=true;q.setAttribute("aria-expanded","false")}
+  function mark(){L.querySelectorAll("[role=option]").forEach((li,i)=>li.setAttribute("aria-selected",String(i===sel)));if(sel>=0)q.setAttribute("aria-activedescendant","qo"+sel)}
+  window.pickQ=id=>{hide();q.value=byId[id].name;zoomToId(id);open(id);q.blur()};
+  q.addEventListener("input",show);q.addEventListener("focus",show);
+  q.addEventListener("keydown",e=>{if(L.hidden)return;if(e.key==="ArrowDown"){e.preventDefault();sel=Math.min(items.length-1,sel+1);mark()}else if(e.key==="ArrowUp"){e.preventDefault();sel=Math.max(0,sel-1);mark()}else if(e.key==="Escape"){hide()}});
+  L.addEventListener("mousedown",e=>{const li=e.target.closest("[role=option]");if(li){e.preventDefault();pickQ(li.dataset.id)}});
+  document.addEventListener("click",e=>{if(!e.target.closest("#qform"))hide()});})();
 $("#q").addEventListener("input",e=>{const v=e.target.value.trim().toLowerCase();const c=C.find(x=>x.name.toLowerCase()===v);if(c&&(e.inputType===undefined||e.inputType==="insertReplacementText"||!e.inputType)){zoomToId(c.id);open(c.id);e.target.blur()}});
 $("#q").addEventListener("change",e=>{const c=C.find(x=>x.name.toLowerCase()===e.target.value.trim().toLowerCase());if(c&&drawer.hidden){zoomToId(c.id);open(c.id)}});
 const regions=[...new Set(C.map(c=>c.region))];let activeRegion=null;
@@ -4764,6 +4813,10 @@ function renderLayer(){const c=cur;
     h=`<div class="part"><h3>Music</h3><p>Sounds you'll hear in ${esc(c.name)}. Tap Listen to hear examples.</p></div>
       <div class="music">${m.styles.map(([n,d])=>`<div class="mstyle"><div><h4>${esc(n)}</h4><p>${esc(d)}</p></div><a class="listen" href="${yt(n+" "+c.name+" music")}" target="_blank" rel="noopener">Listen ↗</a></div>`).join("")}</div>
       <div><span class="label">Traditional instruments</span>${chips(m.instruments)}</div>
+      ${STORY[c.id]?(()=>{const t=STORY[c.id];return `<div class="part story"><h3>How people tell stories</h3><p>${esc(t.how)}</p>
+        ${(t.tales||[]).length?`<ul class="tales">${t.tales.map(([n,d])=>`<li><b>${esc(n)}</b> ${esc(d)}</li>`).join("")}</ul>`:""}
+        ${t.proverb?`<blockquote class="proverb"><p>${esc(t.proverb[0])}</p><footer>${esc(t.proverb[1])}</footer></blockquote>`:""}
+        ${t.read?`<p class="story-read"><b>A book to share:</b> <i>${esc(t.read[0])}</i> by ${esc(t.read[1])}</p>`:""}</div>`})():""}
       <div class="part"><h3>Artists and creators</h3></div>
       <div class="artists">${A[c.id].map(([n,f,d])=>`<div class="artist"><span class="label">${esc(f)}</span><h4>${esc(n)}</h4><p>${esc(d)}</p></div>`).join("")}</div>
       ${nxt(4)}`;
@@ -4781,6 +4834,8 @@ function renderLayer(){const c=cur;
           <p><b>Steps:</b></p><ol>${(P.steps||[]).map(t=>`<li>${esc(t)}</li>`).join("")}</ol>
           <p><b>To close:</b> ${esc(P.close)}</p>${P.connect?`<p class="lp-connect">${esc(P.connect)}</p>`:""}<button class="small lp-print" type="button" data-country="${esc(c.name)}" data-grade="${GRADES[i]}">Print this lesson</button></div></details>`
         :`<div class="lesson"><span class="grade">${GRADES[i]}</span><div><h4>${esc(x[0])}</h4><p>${esc(x[1])}</p></div></div>`}).join("")}
+      <div class="part more-lessons"><h3>More lessons from trusted sources</h3><p>Find more classroom-ready lessons about ${esc(c.name)} from these educator sites:</p>
+        <div class="ml-grid">${MORE_LESSONS.map(([n,d,u])=>`<a class="ml" href="${u(c.name)}" target="_blank" rel="noopener"><b>${n} ↗</b><span>${d}</span></a>`).join("")}</div></div>
       <div class="box guide"><h3>Teaching it well</h3><ul>${li(GUIDE)}</ul></div>
       <div class="part"><h3>Shared by teachers</h3><p>Lessons other teachers have used for ${esc(c.name)}.</p></div>
       <div class="lesson-list" data-country="${c.id}"></div>${lessonFormHTML(c.id)}
@@ -5097,6 +5152,14 @@ function printLetter(){const read=id=>{const e=document.getElementById(id);retur
   const L2=LET[LETLANG];
   el.innerHTML=`<section class="lp-page" lang="${esc(LETLANG)}" dir="${L2.dir||"ltr"}"><h1>${esc(L2.native||LETLANG)}</h1>${para(L2.text)}</section><section class="lp-page" lang="en"><h1>English</h1>${para(LET.English.text)}</section>`;
   document.body.classList.add("letter-on");const done=()=>{document.body.classList.remove("letter-on");removeEventListener("afterprint",done)};addEventListener("afterprint",done);window.print();setTimeout(done,1500)}
+const STORY={};
+const MORE_LESSONS=[
+ ["Rethinking Schools","Social justice lessons and articles by teachers",n=>"https://rethinkingschools.org/?s="+encodeURIComponent(n)],
+ ["Zinn Education Project","People's history lessons for middle and high school",n=>"https://www.zinnedproject.org/?s="+encodeURIComponent(n)],
+ ["Learning for Justice","Free anti-bias lessons and texts, K–12",n=>"https://www.google.com/search?q="+encodeURIComponent("site:learningforjustice.org "+n)],
+ ["PBS LearningMedia","Free videos and lessons by grade",n=>"https://www.google.com/search?q="+encodeURIComponent("site:pbslearningmedia.org "+n)],
+ ["National Geographic Education","Maps, photos and activities",n=>"https://www.google.com/search?q="+encodeURIComponent("site:education.nationalgeographic.org "+n)],
+ ["Smithsonian Learning Lab","Museum objects and teaching collections",n=>"https://learninglab.si.edu/search?st="+encodeURIComponent(n)]];
 /* My Classroom */
 let CLS=[];try{CLS=JSON.parse(localStorage.getItem("cc-class")||"[]").filter(id=>byId[id])}catch(e){}
 const saveCls=()=>{try{localStorage.setItem("cc-class",JSON.stringify(CLS))}catch(e){}};
