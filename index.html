@@ -634,6 +634,117 @@ footer a{color:inherit;text-underline-offset:3px}
 .section-h{margin-bottom:14px}
 .game{background:transparent!important;border:0!important;padding:0!important;border-radius:0}
 .game .game-word{margin-top:4px}
+
+/* section colors: each tab gets its own hue */
+.layers [data-l="0"]{--lc:#E8505B}
+.layers [data-l="1"]{--lc:#F2A51A}
+.layers [data-l="2"]{--lc:#D6449E}
+.layers [data-l="3"]{--lc:#22A86E}
+.layers [data-l="4"]{--lc:#7C69EA}
+.layers [data-l="5"]{--lc:#C8862B}
+.layers [data-l="6"]{--lc:#14ADB0}
+.layers button .ico{stroke:var(--lc)!important}
+.layers button:hover{background:color-mix(in srgb,var(--lc) 12%,var(--surface))}
+.layers button[aria-selected="true"]{background:color-mix(in srgb,var(--lc) 24%,var(--surface))!important;color:var(--ink)!important;box-shadow:inset 0 -3px 0 var(--lc)!important}
+.layers button[aria-selected="true"] .ico{stroke-width:2.2}
+#drawer:has(#layers [data-l="0"][aria-selected="true"]) .layers{border-bottom:3px solid #E8505B}
+#drawer:has(#layers [data-l="1"][aria-selected="true"]) .layers{border-bottom:3px solid #F2A51A}
+#drawer:has(#layers [data-l="2"][aria-selected="true"]) .layers{border-bottom:3px solid #D6449E}
+#drawer:has(#layers [data-l="3"][aria-selected="true"]) .layers{border-bottom:3px solid #22A86E}
+#drawer:has(#layers [data-l="4"][aria-selected="true"]) .layers{border-bottom:3px solid #7C69EA}
+#drawer:has(#layers [data-l="5"][aria-selected="true"]) .layers{border-bottom:3px solid #C8862B}
+#drawer:has(#layers [data-l="6"][aria-selected="true"]) .layers{border-bottom:3px solid #14ADB0}
+
+/* friendlier drawer: section-colored body, roomy next button, collapsing header, swipe hint */
+#drawer:has(#layers [data-l="0"][aria-selected="true"]) .dbody{--rc:#E8505B}
+.dbody .next[data-go="0"]{--rc:#E8505B}
+#drawer:has(#layers [data-l="1"][aria-selected="true"]) .dbody{--rc:#F2A51A}
+.dbody .next[data-go="1"]{--rc:#F2A51A}
+#drawer:has(#layers [data-l="2"][aria-selected="true"]) .dbody{--rc:#D6449E}
+.dbody .next[data-go="2"]{--rc:#D6449E}
+#drawer:has(#layers [data-l="3"][aria-selected="true"]) .dbody{--rc:#22A86E}
+.dbody .next[data-go="3"]{--rc:#22A86E}
+#drawer:has(#layers [data-l="4"][aria-selected="true"]) .dbody{--rc:#7C69EA}
+.dbody .next[data-go="4"]{--rc:#7C69EA}
+#drawer:has(#layers [data-l="5"][aria-selected="true"]) .dbody{--rc:#C8862B}
+.dbody .next[data-go="5"]{--rc:#C8862B}
+#drawer:has(#layers [data-l="6"][aria-selected="true"]) .dbody{--rc:#14ADB0}
+.dbody .next[data-go="6"]{--rc:#14ADB0}
+.dbody .next{align-self:stretch;text-align:center;padding:15px 18px;font-size:1rem;font-weight:800;border-radius:16px;border-width:2px;margin-top:4px}
+.dhead,.dhead h2,.dhead .ghost,.dhead .stamp,.dhead .label{transition:all .25s ease}
+#drawer.compact .dhead{padding-top:12px;padding-bottom:10px}
+#drawer.compact .dhead h2{font-size:1.5rem}
+#drawer.compact .dhead .ghost,#drawer.compact .dhead .stamp{opacity:0;height:0;margin:0;padding:0;overflow:hidden;font-size:0}
+#drawer.compact .dhead .label{font-size:.62rem}
+#drawer.compact .dhead .x{width:32px;height:32px;font-size:1.1rem}
+@media (prefers-reduced-motion:no-preference){
+.dbody.from-right>*{animation:inR .28s both}.dbody.from-left>*{animation:inL .28s both}}
+@keyframes inR{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes inL{from{transform:translateX(-24px);opacity:0}to{transform:none;opacity:1}}
+.swipehint{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-family:var(--display);font-weight:700;font-size:.9rem;padding:9px 16px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:5;white-space:nowrap;pointer-events:none;transition:opacity .4s}
+.swipehint.gone{opacity:0}
+.layers button:focus-visible{outline:3px solid var(--lc);outline-offset:1px}
+.dnav button{min-height:48px}
+
+/* classroom: clearer adding */
+#classroom.cl-has .cl-steps{display:none}
+.cl-steps{list-style:none;counter-reset:st;margin:12px 0 4px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cl-steps li{counter-increment:st;background:var(--soft);border-radius:12px;padding:9px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.cl-steps b{font-family:var(--display);font-size:.9rem}
+.cl-steps b::before{content:counter(st);display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--c-mena);color:#fff;font-size:.7rem;margin-right:6px;vertical-align:1px}
+.cl-steps span{font-size:.8rem;color:var(--muted);line-height:1.3}
+@media (max-width:520px){.cl-steps{grid-template-columns:1fr}.cl-steps li{flex-direction:row;align-items:baseline;gap:8px}}
+.cl-match{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.cl-match:empty{display:none}
+.cl-have{opacity:.6;cursor:default}
+.cl-status{margin:6px 0 0;min-height:1.2em;font:700 .88rem var(--display);color:var(--good)}
+.cl-status:empty{min-height:0;margin:0}
+.cl-count{flex-basis:100%;font:800 .78rem var(--display);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.cl-quick{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.cl-quick .tiny{margin:0}
+.cl-chips{margin-top:12px}
+@media print{.cl-steps,.cl-match,.cl-quick,.cl-status{display:none!important}}
+
+/* stacked phrase + pronunciation */
+.phrase b{margin-top:6px}
+.phrase .label+b{margin-top:4px}
+.phrase span.say{margin-top:1px;font-size:.88rem;font-style:italic;color:var(--muted)}
+.phrase .por{display:block;margin-top:8px;font:700 .72rem var(--display);color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+
+.cv-go{display:block;margin-top:12px;text-align:center;background:var(--rc);color:#0B1520;padding:14px 16px;border-radius:14px;font:800 1rem var(--display);text-decoration:none}
+
+/* phones: the country page fills the whole screen */
+@media (max-width:700px){
+  #drawer{top:0;height:100%;height:100dvh;border-radius:0;box-shadow:none}
+  .dhead{padding-top:calc(env(safe-area-inset-top,0px) + 16px)}
+  #drawer.compact .dhead{padding-top:calc(env(safe-area-inset-top,0px) + 10px)}
+  .dhead::before{display:none}
+  #scrim{background:var(--surface)}
+}
+
+/* no big greeting word behind the country name */
+.dhead .ghost{display:none!important}
+
+/* museum links in the clothing viewer */
+.cv-sec{margin:0 0 8px;font:800 .72rem var(--display);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.cv-links{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.cv-photos{margin-bottom:18px}
+.cv-photos figcaption{font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.3}
+.cv-photos figcaption a{color:var(--ink)}
+.cv-photos figure{margin:0}
+.cv-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:var(--soft);border-left:5px solid var(--rc);color:var(--ink);text-decoration:none}
+.cv-link span{display:flex;flex-direction:column;min-width:0}
+.cv-link b{font:800 1rem var(--display)}
+.cv-link small{font-size:.84rem;color:var(--muted);line-height:1.35}
+.cv-link i{font-style:normal;font-weight:800;flex:none}
+.cv-link:hover{background:color-mix(in srgb,var(--rc) 16%,var(--soft))}
+
+.cv-note{margin:-2px 0 10px;font-size:.85rem;color:var(--muted)}
+.cv-by{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+#photocheck{position:fixed;inset:0;z-index:100;background:var(--bg);overflow:auto;padding:24px 16px}
+#photocheck .pc-in{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+#photocheck h3{margin:14px 0 4px;font-size:1.05rem}
+#photocheck p{margin:0;font-size:.92rem}
 .note{margin:14px 0 0!important;text-align:left;max-width:52ch}
 .teach-hub{gap:16px}
 footer{margin-top:48px!important}
@@ -4784,6 +4895,12 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden)clos
 $("#layers").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;layer=+b.dataset.l;renderLayer()});
 const GRADES=["Grades K–2","Grades 3–5","Grades 6–8","Grades 9–12"];
 const GUIDE=["Center voices from the culture: books, music and speakers from the community itself","Connect to students' own lives and families, and invite sharing without requiring it","Teach history honestly, including colonialism, resistance and resilience","Avoid costumes or dress-up of religious and sacred items","Show the culture as living and modern, not only ancient or traditional","Make room for many identities within one country"];
+/* sound-it-out guides for every phrase */
+(function(){const S={"japan":[null,"sah-YOH-nah-rah · mah-tah NEH","ah-ree-GAH-toh go-ZAI-mahs"],"mexico":[null,"ah-DYOHS · AHS-tah LWEH-go","GRAH-see-ahs"],"nigeria":["SAN-noo · n-DEH-woh · eh n LEH","sai an-JEE-mah · kah aw DEE · oh dah-BAW","nah GOH-deh · dah-LOO · eh SHEH"],"india":[null,"pheer mee-LEN-gay","dhun-yuh-VAHD · shook-REE-yah"],"egypt":["AH-lan · ah-sah-LAAM ah-LAY-koom","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"brazil":["OY · oh-LAH","CHOW","oh-bree-GAH-doo · oh-bree-GAH-dah"],"germany":["HAH-loh · GOO-ten tahk","chooss · owf VEE-der-zay-en","DAHN-keh"],"south-korea":[null,"ahn-nyong-hee gah-SAY-yo","gahm-sah-HAHM-nee-dah"],"philippines":[null,"pah-AH-lahm · EE-ngaht","sah-LAH-maht poh"],"lebanon":["MAR-ha-ba · AH-lan","MAH-ah sah-LAA-meh · YAH-lah bye","SHOOK-ran · mehr-SEE"],"palestine":["MAR-ha-ba · ah-sah-LAAM ah-LAY-koom","MAH-ah ah-sah-LAA-meh","SHOOK-ran · yis-LAH-moo"],"afghanistan":[null,"khoo-DAH hah-FEEZ","tah-shah-KOR · mah-NAH-nah"],"albania":["pur-shen-DET-yeh · toon-jaht-YEH-tah","meer-oo-PAHF-sheem","fah-leh-meen-DEH-reet"],"algeria":[null,"b-SLAH-mah","SAH-hah · tah-NEM-meert"],"andorra":["OH-lah · bon DEE-ah","ah-DAY-oo","GRAH-see-es"],"angola":["oh-LAH · bong DEE-ah","ah-TEH LOH-goo","oh-bree-GAH-doo · oh-bree-GAH-dah"],"antigua":["Good morning · wah GWAHN","LAY-tah",""],"argentina":["OH-lah · keh TAHL","CHOW","GRAH-see-ahs"],"armenia":[null,"hah-JOGH","shnor-hah-kah-loo-TYOON · mehr-SEE"],"australia":[null,"",""],"austria":["grooss GOT · ZEHR-voos","ZEHR-voos · owf VEE-der-shou-en","DAHN-keh"],"azerbaijan":[null,"heh-leh-LEEK","teh-shek-KOOR eh-DEE-rem · sahgh OHL"],"bahamas":[null,"",""],"bahrain":[null,"MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"bangladesh":["ah-sah-LAH-moo ah-LAY-koom · noh-moh-SHKAR","AH-bar DEH-kha HOH-beh","DHOHN-noh-bahd"],"barbados":[null,"",""],"belarus":["vee-TAH-yoo · prih-vee-TAHN-nyeh","dah pah-bah-CHEN-nyah","DZYAH-koo-yoo"],"belgium":["HAH-loh · bon-ZHOOR","tot ZEENS · oh ruh-VWAHR","dahnk EW · mehr-SEE"],"belize":[null,"LAH-tah","tank YOO"],"benin":[null,"oh ruh-VWAHR","mehr-SEE"],"bhutan":[null,"LAH-soh","kah-DREEN-cheh lah"],"bolivia":["OH-lah · kah-mee-SAH-kee · ee-my-NAH-yah","CHOW","GRAH-see-ahs · yoos-pah-HAH-rah · yoo-sool-PIE-kee"],"bosnia":["ZDRAH-vo · seh-LAHM","doh-vee-JEN-yah","HVAH-lah"],"botswana":["doo-MEH-lah (mah / rrah)","SAH-lah SEN-tleh","keh ah leh-BOH-khah"],"brunei":["ah-sah-LAH-moo ah-LAY-koom · seh-LAH-mat PAH-gee","seh-LAH-mat TING-gahl","teh-REE-mah KAH-see"],"bulgaria":[null,"doh-VEEZH-dah-neh · CHOW","blah-goh-DAR-yah · mehr-SEE"],"burkina-faso":[null,"oh ruh-VWAHR","BAR-kah"],"burundi":[null,"nee ah-EH-joh","moo-rah-KOH-zeh"],"cabo-verde":["OY · MOH-dee kee boo STAH","CHOW","oh-bree-GAH-doo"],"cambodia":["soos-DAY · chum-REE-up SOO-uh","lee-uh SUN hai","aw-KOON"],"cameroon":["bon-ZHOOR · Hello","oh ruh-VWAHR","mehr-SEE · Thank you"],"canada":["Hello · bon-ZHOOR","Bye · oh ruh-VWAHR","Thank you · mehr-SEE · MEEG-weh-ch"],"car":[null,"oh ruh-VWAHR","seen-GEE-lah"],"chad":["sah-LAAM · bon-ZHOOR","MAH-ah ah-sah-LAH-mah","SHOOK-ran · mehr-SEE"],"chile":["OH-lah · KOH-moh es-TIE","CHOW","GRAH-see-ahs"],"china":[null,"dzai-JYEN","SHYEH-shyeh"],"colombia":["OH-lah · keh MAHS","CHOW","GRAH-see-ahs"],"comoros":[null,"kwah-HEH-ree","mah-rah-HAH-bah"],"congo":[null,"KEN-deh mah-LAH-moo","mah-TON-doh"],"drc":["m-BOH-teh · JAHM-boh","KEN-deh mah-LAH-moo","mah-TON-doh · ah-SAHN-teh"],"costa-rica":["OH-lah · POO-rah VEE-dah","POO-rah VEE-dah · CHOW","GRAH-see-ahs · mwee ah-MAH-bleh"],"cote-divoire":["bon-ZHOOR · ah-KWAH-bah","oh ruh-VWAHR","mehr-SEE · ee nee CHAY"],"croatia":["bok · DOH-bar dahn","bok · doh-vee-JEN-yah","HVAH-lah"],"cuba":["OH-lah · keh boh-LAH","CHOW","GRAH-see-ahs"],"cyprus":[null,"YAH-soo · HOSH-chah kahl","ef-khah-ree-STOH · teh-shek-KOOR-lehr"],"czechia":["AH-hoy · DOH-bree den","nah SKHLEH-dah-noh","DYEH-koo-yee"],"denmark":[null,"HI hi · far-VEL","tahk"],"djibouti":["sah-LAHM · IS-kah WAR-ran","NAH-bahd GEL-yoh","mah-hahd-SAH-nid · SHOOK-ran"],"dominica":[null,"oh-VWAH","meh-SEE"],"dominican-republic":["OH-lah · keh loh KEH","nohs VEH-mohs","GRAH-see-ahs"],"ecuador":["OH-lah · AH-yee POON-chah","CHOW","GRAH-see-ahs · yoo-pie-CHAH-nee"],"el-salvador":["OH-lah · keh ON-dah","nohs VEH-mohs","GRAH-see-ahs"],"equatorial-guinea":["OH-lah · m-BOH-loh","ah-DYOHS","GRAH-see-ahs · ah-KEE-bah"],"eritrea":[null,"DEH-hahn koon","yeh-ken-yeh-LAY"],"estonia":[null,"heh-AHD AH-eh-gah","EYE-tah"],"eswatini":[null,"SAH-lah KAH-shleh","ngee-yah-BOHN-gah"],"ethiopia":["seh-LAHM · TEH-nah yis-tih-LEEN","DEH-nah hoon","ah-meh-seh-gee-nah-LEH-hoo · gah-lah-TOH-mah"],"fiji":[null,"MOH-theh","vee-NAH-kah"],"finland":[null,"HAY hay · MOYK-kah","KEE-tohs"],"france":[null,"oh ruh-VWAHR","mehr-SEE"],"gabon":[null,"oh ruh-VWAHR","ah-KEE-bah · mehr-SEE"],"gambia":["ah-sah-LAHM ah-LAY-koom · NAHN-gah def","bah beh-NEHN","jeh-reh-JEF · ah-bah-RAH-kah"],"georgia":[null,"nahkh-VAHM-dees","mahd-LOH-bah"],"ghana":["ah-KWAH-bah · eh-teh SEN","NAHN-teh YEH","meh-DAH-seh"],"greece":["YAH-soo · kah-lee-MEH-rah","ahn-DEE-oh","ef-khah-ree-STOH"],"grenada":[null,"",""],"guatemala":["OH-lah · sah-kah-REEK","ah-DYOHS","GRAH-see-ahs · mahl-TYOSH"],"guinea":["bon-ZHOOR · on jah-RAH-mah","oh ruh-VWAHR","ah jah-RAH-mah"],"guinea-bissau":[null,"teh LOH-goh","oh-bree-GAH-doo"],"guyana":["Hello · wah GWAHN","",""],"haiti":["bon-ZHOO · sak pah-SAY","oh-rev-WAH","meh-SEE"],"honduras":["OH-lah · keh ON-dah MAH-heh","ah-DYOHS","GRAH-see-ahs"],"hungary":["SEE-ah · YOH NAH-poht","VEES-laht","KUH-suh-nuhm"],"iceland":["HAHL-loh · GOH-than DIE-in","bless","tahk"],"indonesia":["HAH-loh · seh-LAH-mat PAH-gee","sahm-PIE JOOM-pah","teh-REE-mah KAH-see"],"iran":[null,"khoh-dah-hah-FEZ","mehr-SEE · mahm-NOON"],"iraq":["ah-sah-LAAM ah-LAY-koom · SHLOH-nak","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"ireland":["DEE-ah gwitch · HOW-yah","slawn","guh rev mah ah-GUT"],"israel":[null,"leh-heet-rah-OHT","toh-DAH"],"italy":["CHOW · bwon-JOR-noh","ah-ree-veh-DEHR-chee","GRAHT-see-eh"],"jamaica":["wah-GWAHN · Good morning","LIK-kul mor · wahk GUD","ree-SPEK · tanks"],"jordan":["MAR-ha-ba · ah-sah-LAAM ah-LAY-koom","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"kazakhstan":[null,"sow boh-LUH-nuhz","rahkh-MET"],"kenya":["JAHM-boh · hah-BAH-ree","kwah-HEH-ree","ah-SAHN-teh"],"kiribati":[null,"see ah BOH","koh RAHB-wah"],"kosovo":["toon-jah-TYEH-tah · pur-shen-DET-yeh","meer-oo-PAHF-sheem","fah-leh-meen-DEH-reet"],"kuwait":["MAR-ha-ba · ah-sah-LAAM ah-LAY-koom","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"kyrgyzstan":[null,"kohsh boh-loo-NOOZ","rahkh-MAHT"],"laos":[null,"lah KAWN","khawp JAI"],"latvia":["SVAY-kee · LAHB-dee-en","ooz RED-zeh-shah-nwos · ah-TAH","PAHL-dee-es"],"lesotho":[null,"SAH-lah HAHN-tleh","keh-ah leh-BOH-hah"],"liberia":["Hello · how-dah-BAH-dee","BYE-oh · Take care","tank YOO"],"libya":["MAR-ha-ba · ah-sah-LAAM ah-LAY-koom","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"liechtenstein":["HOY · GREW-et-see","chooss · oof VEE-der-loo-eh-geh","DAHN-keh"],"lithuania":["LAH-bahs · LAH-bah dee-EH-nah","VEE-soh GEH-roh · EE-kee","AH-chyoo"],"luxembourg":[null,"AD-dee","mehr-SEE"],"madagascar":[null,"veh-LOO-mah","mee-SOH-trah"],"malawi":["MOH-nee · MOO-lee BWAHN-jee","tsah-LAH-nee BWEE-noh · pee-TAH-nee BWEE-noh","zee-KOH-moh"],"malaysia":["seh-LAH-mat PAH-gee · AH-pah KAH-bar","seh-LAH-mat TING-gahl · JOOM-pah LAH-gee","teh-REE-mah KAH-see"],"maldives":["ah-sah-LAH-moo ah-LAY-koom · kee-hee-NEH","DAH-nee","shoo-koo-ree-YAH"],"mali":[null,"kahn BEN","ee nee CHAY"],"malta":[null,"SAH-hah","GRAHT-see"],"marshall-islands":[null,"YAH-kway · bar loh YOK","KOHM-mohl TAH-tah"],"mauritania":[null,"MAH-ah sah-LAH-mah","SHOOK-ran"],"mauritius":[null,"oh-rev-WAHR","mehr-SEE"],"micronesia":["kah-seh-LEH-lee · rahn AHN-neem","kah-seh-LEH-lee","kah-LAHNG-ahn · kee-nee-SOH"],"moldova":["BOO-nuh ZEE-wah · sah-LOOT","lah reh-veh-DEH-reh","mool-tsoo-MESK"],"monaco":["bohn-ZHOOR · boon-joor-NOO","oh ruh-VWAHR · ah seh reh-VEH-deh","mehr-SEE · mehr-SEE"],"mongolia":[null,"BAH-yar-tie","BAH-yar-lah-lah"],"montenegro":["ZDRAH-vo · DOH-bar dahn","doh-vee-JEN-yah","HVAH-lah"],"morocco":["sah-LAHM ah-LAY-koom · ah-ZOOL","b-SLAH-mah","SHOOK-ran"],"mozambique":["oh-LAH · bohn DEE-ah","CHOW","oh-bree-GAH-doo / oh-bree-GAH-dah · khah-nee-MAHM-boh"],"myanmar":[null,"thwah DOW meh","chay-zoo TIN-bah-deh"],"namibia":["HAH-loh · wah lah-LAH-poh","KAH-lah poh NAH-wah","TAHN-gee"],"nauru":[null,"tah-rah-WONG","TOOB-wah kor"],"nepal":[null,"PHEH-ree bheh-TOWN-lah","DHUN-yuh-bahd"],"netherlands":["HAH-loh · hoy","dooy · dahkh","DAHNK yuh vel"],"new-zealand":[null,"kah KEE-teh ah-NOH","kee-ah OR-ah · ngah MEE-hee"],"nicaragua":[null,"ah-DYOHS","GRAH-see-ahs"],"niger":[null,"sai an JEE-mah","nah GOH-deh"],"north-korea":[null,"ahn-nyung-hee kyeh-SHIP-shee-oh","kahm-sah-HAHM-nee-dah"],"north-macedonia":["ZDRAH-voh · pur-shen-DET-yeh","pree-YAHT-noh","blah-goh-DAH-rahm · fah-leh-meen-DEH-reet"],"norway":["hi · goo dahg","HAH-deh","tahk"],"oman":[null,"MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"pakistan":[null,"khoo-DAH hah-FEEZ · ahl-LAH hah-FEEZ","shook-REE-yah"],"palau":[null,"meh-KHEE-koong","soo-LAHNG"],"panama":["OH-lah · BWEH-nahs","CHOW · AHS-tah LWEH-go","GRAH-see-ahs"],"papua-new-guinea":["goo-DAY · MOH-ning","LOO-kim yoo","TENK-yoo"],"paraguay":["OH-lah · mbah-AY-shah-pah","jah-joh-toh-pah-TAH","ah-goo-JEH"],"peru":["OH-lah · ah-yee-YAHN-choo","CHOW · ah-DYOHS","GRAH-see-ahs · sool-PIE-kee"],"poland":["jen DOH-brih · cheshch","doh veed-ZEN-yah","jen-KOO-yeh"],"portugal":["oh-LAH · bohn DEE-ah","ah-DEH-oosh · CHOW","oh-bree-GAH-doo · oh-bree-GAH-dah"],"qatar":["ah-sah-LAAM ah-LAY-koom · MAR-ha-ba","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"romania":["BOO-nuh ZEE-wah · sah-LOOT","lah reh-veh-DEH-reh · pah","mool-tsoo-MESK"],"russia":["ZDRAST-vooy-tyeh · pree-VYET","dah svee-DAH-nee-yah · pah-KAH","spah-SEE-bah"],"rwanda":["moo-RAH-ho · mwah-rah-MOOT-seh","moo-rah-BEH-ho","moo-rah-KOH-zeh"],"saint-kitts-and-nevis":["","",""],"saint-lucia":["bon-ZHOO · Good morning","","meh-SEE"],"saint-vincent-and-the-grenadines":["Good morning · wah HAP-nin","",""],"samoa":[null,"toh-FAH","fah-ah-feh-TIE"],"san-marino":["CHOW · bwon-JOR-noh","ah-ree-veh-DEHR-chee","GRAHT-see-eh"],"sao-tome-and-principe":["oh-LAH · bohn DEE-ah","CHOW · ah-DEH-oosh","oh-bree-GAH-doo · oh-bree-GAH-dah"],"saudi-arabia":[null,"MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"senegal":["sah-LAHM ah-LAY-koom · nahn-gah DEF","bah beh-NEHN YOHN","jeh-reh-JEF"],"serbia":["ZDRAH-vo · DOH-bar dahn","doh-vee-JEN-yah","HVAH-lah"],"seychelles":[null,"oh-rev-WAHR","mehr-SEE"],"sierra-leone":[null,"wee goh see BAHK","TEN-kee"],"singapore":["Hello · nee HOW · seh-LAH-mat PAH-gee · vah-NAHK-kahm","Bye-bye · JOOM-pah LAH-gee","Thank you · SHYEH-shyeh · teh-REE-mah KAH-see · NAHN-dree"],"slovakia":["DOH-bree dyen · AH-hoy","DOH-vee-deh-nee-ah","DYAH-koo-yem"],"slovenia":["DOH-ber dahn · ZHEEV-yoh","nahs-VEE-den-yeh","HVAH-lah"],"solomon-islands":[null,"LOO-kim yoo","TAHNG-gee-oh TOO-mahs"],"somalia":["IS-ka wa-RAN · ah-sah-LAH-moo ah-LAY-koom","NAH-bahd GEL-yoh","mah-hahd-SAH-nid"],"south-africa":["sah-woo-BOH-nah · MOH-loh · HAH-loh","SAH-lah KAH-shleh · TOT-seens","ngee-yah-BOHN-gah · en-KOH-see · DAHN-kee"],"south-sudan":["sah-LAHM · chee yee BAHK","MAH-ah sah-LAH-mah","SHOOK-ran"],"spain":[null,"ah-DYOHS · AHS-tah LWEH-go","GRAH-thee-ahs"],"sri-lanka":["ah-yu-BOH-wahn · vah-NAHK-kahm","GEE-hin EN-nahm · POH-yi-too VAH-ren","IS-too-tee · NAHN-dree"],"sudan":[null,"MAH-ah sah-LAH-mah","SHOOK-ran"],"suriname":[null,"tahn BOON","grahn-TAHN-gee"],"sweden":[null,"hey DOH","tahk"],"switzerland":["GREW-et-see · bon-ZHOOR · bwon-JOR-noh","oof VEE-der-loo-eh-geh · oh ruh-VWAHR","mehr-SEE · GRAHT-see-eh"],"syria":[null,"MAH-ah sah-LAH-mah","SHOOK-ran"],"taiwan":["nee HOW · lee HOH","dzai-JYEN","SHYEH-shyeh"],"tajikistan":[null,"khire","rah-MAHT · tah-shah-KOOR"],"tanzania":["hah-BAH-ree · shee-kah-MOH","kwah-HEH-ree","ah-SAHN-teh"],"thailand":[null,"lah GAWN (or sah-wah-DEE)","kawp KOON krahp / kah"],"timor-leste":["bon-DEE-ah · boh-TAR-deh","ah-DEH-oosh","oh-bree-GAH-doo / oh-bree-GAH-dah"],"togo":["bohn-ZHOOR · NG-dee","oh ruh-VWAHR","mehr-SEE · AHK-peh"],"tonga":[null,"AH-loo AH · NOH-foh AH","MAH-loh (OW-pee-toh)"],"trinidad-and-tobago":["Good morning · wah HAP-nin","",""],"tunisia":["as-LEH-mah · sah-LAHM","bis-LEH-mah","YAI-shek · SHOOK-ran"],"turkiye":[null,"HOSH-chah kahl","teh-shek-KOOR eh-deh-REEM"],"turkmenistan":[null,"hosh sahg boh-LOON","sahg boh-LOON"],"tuvalu":[null,"toh-FAH","fah-kah-feh-TIE"],"uganda":[null,"weh-RAH-bah","weh-BAH-leh"],"ukraine":["DOH-bree den · PRIH-veet","doh poh-BAH-chen-nyah","DYAH-koo-yoo"],"united-arab-emirates":["ah-sah-LAAM ah-LAY-koom · MAR-ha-ba","MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"united-kingdom":["Hello · HY-yuh","",""],"united-states":["","",""],"uruguay":["OH-lah · bwen DEE-ah","CHOW","GRAH-see-ahs"],"uzbekistan":["ah-sah-LOH-moo ah-LAY-koom · sah-LOHM","khire","rahkh-MAHT"],"vanuatu":[null,"LOO-kim yoo","tank yoo TOO-mahs"],"vatican-city":["bwon-JOR-noh · SAHL-veh","ah-ree-veh-DEHR-chee","GRAHT-see-eh"],"venezuela":["OH-lah · keh MAHS","CHOW","GRAH-see-ahs"],"vietnam":[null,"tahm bee-ET","gahm UHN"],"yemen":[null,"MAH-ah sah-LAH-mah","SHOOK-ran"],"zambia":["MOO-lee SHAH-nee · MOO-lee BWAHN-jee","shah-leh-NEE-poh · tsah-LAH-nee BWEE-noh","nah-toh-TEH-lah · zee-KOH-moh"],"zimbabwe":["MHOH-roh · sah-woo-BOH-nah","chee-sah-RAI","n-dah-TEN-dah · ngee-yah-BOHN-gah"],"puerto-rico":[null,"ah-DYOHS · nohs VEH-mohs","GRAH-see-ahs"],"greenland":[null,"BAHJ · TAH-koos","koo-YAH-nahk"],"hong-kong":[null,"joy GEEN","mm-GOY · DOH-jeh"],"macau":[null,"joy GEEN · ah-DEH-oosh","mm-GOY · oh-bree-GAH-doo"],"guam":[null,"ah-DYOHS","see JOO-ohs mah-AH-seh"],"western-sahara":[null,"MAH-ah ah-sah-LAH-mah","SHOOK-ran"],"scotland":["Hello · HAH-lo","Cheerio · mar shin LET","Thanks · TAH-puh let"],"wales":["HEH-loh · shoo-MY","HOO-il","DEE-olkh"],"new-caledonia":["bon-ZHOOR · boh-ZOO","oh ruh-VWAHR · TAH-tah","mehr-SEE · oh-LEH-tee"],"french-polynesia":[null,"NAH-nah","mah-oo-roo-OO-roo"],"aruba":[null,"AH-yoh","DAHN-kee"],"curacao":[null,"ah-YOH","DAHN-kee"],"bermuda":[null,"",""],"faroe-islands":["HAY · GOH-wan dea","FAR-vehl","tahk FEE-reh"],"reunion":[null,"ar-TROOV","mehr-SEE"],"french-guiana":["bohn-ZHOOR · bon-ZHOO","oh ruh-VWAHR","meh-SEE"]};C.forEach(c=>{const v=S[c.id];if(!v)return;if(v[0]!==null)c.hiSay=v[0];c.byeSay=v[1];c.thanksSay=v[2]})})();
+/* each word sits right above its own pronunciation; options split by "or" */
+function phraseHTML(label,w,say){const ws=String(w||"").split(" · "),ss=String(say||"").split(" · ");const pair=say&&ws.length===ss.length;
+  return `<div class="phrase"><span class="label">${label}</span>${ws.map((x,i)=>{const sy=pair?ss[i]:(i===0&&say&&ws.length===1?say:"");
+    return `${i?'<span class="por">or</span>':""}<b>${esc(x)}</b>${sy&&sy!==x?`<span class="say">${esc(sy)}</span>`:""}`}).join("")}</div>`}
 const li=a=>a.map(x=>`<li>${esc(x)}</li>`).join("");
 function renderLayer(){const c=cur;
   document.querySelectorAll("#layers button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.l===layer));
@@ -4807,9 +4924,7 @@ function renderLayer(){const c=cur;
         <div class="qcols"><div class="box do"><h3>Great to talk about</h3><p>${esc(x.safe||"")}</p></div><div class="box dont"><h3>Best to avoid</h3><p>${esc(x.avoid||"")}</p></div></div>
         <p class="meta" style="margin:0">Everyone is different. The best way to learn about someone is to ask, and to listen.</p></div>`:"";
     h=`<div class="phrases">
-        <div class="phrase"><span class="label">Hello</span><b>${esc(c.hi)}</b><span class="say">${esc(c.hiSay)}</span></div>
-        <div class="phrase"><span class="label">Goodbye</span><b>${esc(c.bye)}</b></div>
-        <div class="phrase"><span class="label">Thank you</span><b>${esc(c.thanks)}</b></div></div>
+        ${phraseHTML("Hello",c.hi,c.hiSay)}${phraseHTML("Goodbye",c.bye,c.byeSay)}${phraseHTML("Thank you",c.thanks,c.thanksSay)}</div>
       <p class="big">${esc(c.norms)}</p>
       <div class="facts">
         <div class="fact"><span class="label">Capital</span><p>${esc(c.capital)}</p></div>
@@ -4824,7 +4939,7 @@ function renderLayer(){const c=cur;
       ${nxt(1)}`;
   }else if(layer===2){
     const cl=CL[c.id];
-    h=`${cl?`<div class="part"><h3>Traditional clothing</h3><div class="foods">${cl.items.map(f=>`<button type="button" class="food cloth clothbtn" data-cloth="${esc(f)}" data-cn="${esc(c.name)}" aria-label="See photos of ${esc(f)}">${esc(f)}<svg class="camico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg></button>`).join("")}</div><p class="tiny cloth-hint">Tap an item to see photos.</p><p style="margin-top:10px">${esc(cl.text)}</p></div>`:`<p class="tiny">Traditional clothing for ${esc(c.name)} is coming soon.</p>`}
+    h=`${cl?`<div class="part"><h3>Traditional clothing</h3><div class="foods">${cl.items.map(f=>`<button type="button" class="food cloth clothbtn" data-cloth="${esc(f)}" data-cn="${esc(c.name)}" aria-label="See photos of ${esc(f)}">${esc(f)}<svg class="camico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg></button>`).join("")}</div><p class="tiny cloth-hint">Tap an item to see photos from museums.</p><p style="margin-top:10px">${esc(cl.text)}</p></div>`:`<p class="tiny">Traditional clothing for ${esc(c.name)} is coming soon.</p>`}
       <div class="part"><h3>What to wear as a visitor</h3><p>${esc(x.dress||"")}</p></div>
       ${nxt(2)}`;
   }else if(layer===3){
@@ -5203,20 +5318,24 @@ function buildClassroom(){
   const d=document.createElement("section");d.id="classroom";d.className="dash cls";d.hidden=true;d.setAttribute("aria-label","My Classroom");
   d.innerHTML=`<div class="dash-bar"><button class="dash-back" data-act="close-cls">← Back to the map</button><span class="dash-title">My Classroom</span></div>
   <div class="dash-wrap">
-    <header class="dash-head"><h2>My Classroom</h2><p>Add the countries your students and their families come from. You'll get one page with what helps you welcome them.</p></header>
+    <header class="dash-head"><h2>My Classroom</h2><p>Add every country your students' families come from. Add as many as you like.</p>
+      <ol class="cl-steps"><li><b>Welcome</b><span>Greetings, questions to ask, a family letter</span></li><li><b>Coming up</b><span>Holidays your students may celebrate</span></li><li><b>Country notes</b><span>Names, school, food and family</span></li></ol></header>
     <form class="cl-add" id="cladd"><input id="clq" type="search" list="clist" placeholder="Type a country, like Mexico" aria-label="Add a country" autocomplete="off" enterkeyhint="done"><button type="submit">Add</button></form>
+    <div class="cl-match" id="clmatch" aria-live="polite"></div>
+    <p class="cl-status" id="clstatus" role="status"></p>
     <div class="cl-chips" id="clchips" aria-live="polite"></div>
+    <div id="clquick"></div>
     <div id="clbody"></div>
     <p class="tiny cl-privacy">Your list is saved only on this device. No student names needed.</p>
   </div>`;
   document.body.appendChild(d);
   $("#cladd").onsubmit=e=>{e.preventDefault();const c=findCountry($("#clq").value);
-    if(c){if(!CLS.includes(c.id)){CLS.push(c.id);saveCls()}$("#clq").value="";renderClassroom()}
+    if(c){if(!CLS.includes(c.id)){CLS.push(c.id);saveCls()}$("#clq").value="";clMatch();renderClassroom();clAdded(c)}
     else{$("#clq").setCustomValidity("Pick a country from the list");$("#clq").reportValidity();setTimeout(()=>$("#clq").setCustomValidity(""),1500)}};
   d.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act;
     if(a==="close-cls")closeCls();
     else if(a==="cl-rm"){CLS=CLS.filter(x=>x!==b.dataset.id);saveCls();renderClassroom()}
-    else if(a==="cl-add"){if(!CLS.includes(b.dataset.id)){CLS.push(b.dataset.id);saveCls()}renderClassroom()}
+    else if(a==="cl-add"){if(!CLS.includes(b.dataset.id)){CLS.push(b.dataset.id);saveCls()}$("#clq").value="";clMatch();renderClassroom();clAdded(byId[b.dataset.id])}
     else if(a==="cl-open"){open(b.dataset.id)}
     else if(a==="cl-teach"){open(b.dataset.id);layer=6;renderLayer();const t=document.querySelector('#layers [data-l="6"]');if(t)t.scrollIntoView({block:"nearest",inline:"center"})}
     else if(a==="cl-print"){d.querySelectorAll("details").forEach(x=>x.open=true);d.querySelectorAll(".cl-pane").forEach(x=>x.hidden=false);window.print();renderClassroom()}
@@ -5229,17 +5348,26 @@ function buildClassroom(){
     else if(a==="cl-cal"){CAL_ALL=!CAL_ALL;renderClassroom()}
     else if(a==="cl-clear"){if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="Tap again to remove every country";setTimeout(()=>{if(b.isConnected){b.dataset.sure="";b.textContent="Start over"}},4000);return}
       CLS=[];saveCls();renderClassroom()}});
+  $("#clq").addEventListener("input",clMatch);
   document.querySelectorAll('a[href="#classroom"]').forEach(a=>a.addEventListener("click",e=>{e.preventDefault();openCls()}));
   routeCls();
 }
 function clRow(label,txt){return txt?`<div class="qrow"><b>${label}</b><p>${esc(txt)}</p></div>`:""}
+function clQuick(){const left=CL_SUGGEST.filter(id=>!CLS.includes(id)).slice(0,CLS.length?6:12);
+  return left.length?`<div class="cl-quick"><span class="tiny">${CLS.length?"Add another:":"Or tap to add:"}</span><div class="cl-sugg">${left.map(id=>`<button class="qbtn" data-act="cl-add" data-id="${id}" style="--rc:${rc(byId[id])}">+ ${esc(byId[id].name)}</button>`).join("")}</div></div>`:""}
+function clMatch(){const box=$("#clmatch");if(!box)return;const v=nrm($("#clq").value||"");
+  if(!v){box.innerHTML="";return}
+  const hits=sorted.filter(c=>nrm(c.name).includes(v)).sort((a,b)=>nrm(a.name).indexOf(v)-nrm(b.name).indexOf(v)).slice(0,6);
+  box.innerHTML=hits.length?hits.map(c=>CLS.includes(c.id)?`<span class="qbtn cl-have" style="--rc:${rc(c)}">✓ ${esc(c.name)}</span>`:`<button type="button" class="qbtn" data-act="cl-add" data-id="${c.id}" style="--rc:${rc(c)}">+ ${esc(c.name)}</button>`).join(""):`<span class="tiny">No country matches “${esc($("#clq").value)}”.</span>`}
+function clAdded(c){if(!c)return;const st=$("#clstatus");if(st){st.textContent=`Added ${c.name}. Add another, or scroll down to see your page.`;clearTimeout(clAdded.t);clAdded.t=setTimeout(()=>{st.textContent=""},3500)}
+  if(!matchMedia("(pointer:coarse)").matches)$("#clq").focus()}
 function renderClassroom(){
-  $("#clchips").innerHTML=CLS.map(id=>`<span class="cl-chip" style="--rc:${rc(byId[id])}">${esc(byId[id].name)}<button data-act="cl-rm" data-id="${id}" aria-label="Remove ${esc(byId[id].name)}">×</button></span>`).join("");
-  const body=$("#clbody");
-  if(!CLS.length){body.innerHTML=`<div class="cl-empty"><p>Start by adding a country above, or tap one of these:</p><div class="cl-sugg">${CL_SUGGEST.map(id=>`<button class="qbtn" data-act="cl-add" data-id="${id}" style="--rc:${rc(byId[id])}">+ ${esc(byId[id].name)}</button>`).join("")}</div></div>`;return}
+  $("#clchips").innerHTML=(CLS.length?`<span class="cl-count">Your class · ${CLS.length} ${CLS.length===1?"country":"countries"}</span>`:"")+CLS.map(id=>`<span class="cl-chip" style="--rc:${rc(byId[id])}">${esc(byId[id].name)}<button data-act="cl-rm" data-id="${id}" aria-label="Remove ${esc(byId[id].name)}">×</button></span>`).join("");
+  $("#classroom").classList.toggle("cl-has",CLS.length>0);const body=$("#clbody");$("#clquick").innerHTML=CLS.length<5?clQuick():"";
+  if(!CLS.length){body.innerHTML="";return}
   const list=CLS.map(id=>byId[id]);
   const tab=t=>CLTAB===t?"":" hidden";
-  body.innerHTML=`<nav class="dtabs cl-tabs" role="tablist" aria-label="My Classroom sections">${[["start","Get started"],["dates","Coming up"],["notes","Country notes"]].map(([k,l])=>`<button role="tab" data-act="cl-tab" data-t="${k}" aria-selected="${CLTAB===k}">${l}</button>`).join("")}</nav>
+  body.innerHTML=`<nav class="dtabs cl-tabs" role="tablist" aria-label="My Classroom sections">${[["start","Welcome"],["dates","Coming up"],["notes","Country notes"]].map(([k,l])=>`<button role="tab" data-act="cl-tab" data-t="${k}" aria-selected="${CLTAB===k}">${l}</button>`).join("")}</nav>
     <div class="cl-pane" data-pane="start"${tab("start")}>
     <div class="cl-tools"><button class="small" data-act="cl-print">Print this page</button><button class="small ghostbtn" data-act="cl-share">Copy a link to this page</button><button class="linkbtn" data-act="cl-clear">Start over</button></div>
     <div class="part cl-hello"><h3>Say hello to your class</h3><div class="cl-hi">${list.map(c=>{const w=String(c.hi||"").split(" · "),sy=String(c.hiSay||"").split(" · ");const pair=w.length===sy.length&&c.hiSay;
@@ -5431,27 +5559,127 @@ function build(){
   view.querySelector(".cv-scrim").onclick=hide;view.querySelector(".cv-x").onclick=hide;
 }
 function hide(){if(!view||view.hidden)return;view.hidden=true;token++;if(lastBtn&&lastBtn.isConnected)lastBtn.focus()}
-async function show(btn){
+/* real photos from The Met's open-access collection, plus trusted collections to explore */
+const MUSEUMS=[
+  ["Google Arts & Culture","Photos from museums around the world, including many run by the culture itself",q=>"https://artsandculture.google.com/search?q="+q],
+  ["Smithsonian","America's national museums, free to use for teaching",q=>"https://collections.si.edu/search/results.htm?q="+q],
+  ["The Met","The Metropolitan Museum of Art in New York",q=>"https://www.metmuseum.org/art/collection/search?q="+q],
+  ["V&A","London's museum of design, fashion and textiles",q=>"https://collections.vam.ac.uk/search/?q="+q]
+];
+const COMMUNITY={
+  "Palestine":[["The Palestinian Museum Digital Archive","Palestinian dress and embroidery, including the Tiraz collection of Widad Kawar","https://palarchive.org/index.php/Detail/collections/1063/lang/en_US"]]
+};
+const row=(name,note,href)=>'<a class="cv-link" href="'+e2(href)+'" target="_blank" rel="noopener"><span><b>'+e2(name)+'</b><small>'+e2(note)+'</small></span><i aria-hidden="true">↗</i></a>';
+/* museum photo search: The Met, Art Institute of Chicago and Cleveland Museum of Art (all open access) */
+const TERMS={"Japan":["Japanese",["japan"],[]],"Mexico":["Mexican",["mexic"],[]],"Nigeria":["Nigerian",["nigeria","yoruba","igbo","hausa"],[]],"India":["Indian",["india"],[]],"Egypt":["Egyptian",["egypt"],[]],"Brazil":["Brazilian",["brazil"],[]],"Germany":["German",["german"],[]],"South Korea":["Korean",["korea"],[]],"Philippines":["Philippine",["philippin","filipin"],[]],"Lebanon":["Lebanese",["leban"],[]],"Palestine":["Palestinian",["palestin"],[]],"Afghanistan":["Afghan",["afghan"],[]],"Albania":["Albanian",["albania"],[]],"Algeria":["Algerian",["algeria"],[]],"Andorra":["Andorran",["andorra"],[]],"Angola":["Angolan",["angola"],[]],"Antigua and Barbuda":["Antigua",["antigua"],[]],"Argentina":["Argentine",["argentin"],[]],"Armenia":["Armenian",["armenia"],[]],"Australia":["Australian",["australia","aboriginal"],[]],"Austria":["Austrian",["austria"],[]],"Azerbaijan":["Azerbaijani",["azerbaijan"],[]],"The Bahamas":["Bahamas",["bahama"],[]],"Bahrain":["Bahraini",["bahrain"],[]],"Bangladesh":["Bangladeshi",["bangladesh","bengal"],[]],"Barbados":["Barbados",["barbad"],[]],"Belarus":["Belarusian",["belarus"],[]],"Belgium":["Belgian",["belgi"],[]],"Belize":["Belize",["beliz"],[]],"Benin":["Benin",["benin","dahomey","fon"],[]],"Bhutan":["Bhutanese",["bhutan"],[]],"Bolivia":["Bolivian",["bolivia","aymara"],[]],"Bosnia and Herzegovina":["Bosnian",["bosnia"],[]],"Botswana":["Botswana",["botswana","tswana"],[]],"Brunei":["Brunei",["brunei"],[]],"Bulgaria":["Bulgarian",["bulgaria"],[]],"Burkina Faso":["Burkina Faso",["burkina","mossi"],[]],"Burundi":["Burundi",["burundi"],[]],"Cabo Verde":["Cape Verde",["cape verde","cabo verde"],[]],"Cambodia":["Cambodian",["cambodia","khmer"],[]],"Cameroon":["Cameroon",["cameroon","bamileke","bamum"],[]],"Canada":["Canadian",["canad"],[]],"Central African Republic":["Central African",["central african"],[]],"Chad":["Chad",["chad"],[]],"Chile":["Chilean",["chile","mapuche"],[]],"China":["Chinese",["china","chinese"],[]],"Colombia":["Colombian",["colombia"],[]],"Comoros":["Comoros",["comoro"],[]],"Republic of the Congo":["Congo",["congo"],[]],"Democratic Republic of the Congo":["Congo",["congo","kuba","zaire"],[]],"Costa Rica":["Costa Rica",["costa ric"],[]],"Côte d'Ivoire":["Ivory Coast",["ivory coast","côte d'ivoire","cote d'ivoire","ivorian","baule"],[]],"Croatia":["Croatian",["croatia"],[]],"Cuba":["Cuban",["cuba"],[]],"Cyprus":["Cypriot",["cypr"],[]],"Czechia":["Czech",["czech","bohemia"],[]],"Denmark":["Danish",["denmark","danish"],[]],"Djibouti":["Djibouti",["djibouti"],[]],"Dominica":["Dominica",["dominica"],["dominican"]],"Dominican Republic":["Dominican",["dominican"],[]],"Ecuador":["Ecuadorian",["ecuador"],[]],"El Salvador":["Salvadoran",["salvador"],[]],"Equatorial Guinea":["Equatorial Guinea",["equatorial guinea","fang"],[]],"Eritrea":["Eritrean",["eritrea"],[]],"Estonia":["Estonian",["estonia"],[]],"Eswatini":["Swazi",["swazi","eswatini"],[]],"Ethiopia":["Ethiopian",["ethiopia"],[]],"Fiji":["Fijian",["fiji"],[]],"Finland":["Finnish",["finland","finnish"],[]],"France":["French",["france","french"],[]],"Gabon":["Gabon",["gabon","fang"],[]],"The Gambia":["Gambia",["gambia"],[]],"Georgia":["Georgian",["georgia"],["united states","american"]],"Ghana":["Ghanaian",["ghana","asante","ashanti","akan","ewe"],[]],"Greece":["Greek",["greece","greek"],[]],"Grenada":["Grenada",["grenad"],[]],"Guatemala":["Guatemalan",["guatemala","maya"],[]],"Guinea":["Guinea",["guinea"],["new guinea","equatorial","bissau"]],"Guinea-Bissau":["Guinea-Bissau",["bissau"],[]],"Guyana":["Guyana",["guyan"],[]],"Haiti":["Haitian",["haiti"],[]],"Honduras":["Honduran",["hondur"],[]],"Hungary":["Hungarian",["hungar"],[]],"Iceland":["Icelandic",["iceland"],[]],"Indonesia":["Indonesian",["indonesia","java","bali","sumatra"],[]],"Iran":["Iranian",["iran","persia"],[]],"Iraq":["Iraqi",["iraq"],[]],"Ireland":["Irish",["ireland","irish"],[]],"Israel":["Israel",["israel"],[]],"Italy":["Italian",["ital"],[]],"Jamaica":["Jamaican",["jamaica"],[]],"Jordan":["Jordanian",["jordan"],[]],"Kazakhstan":["Kazakh",["kazakh"],[]],"Kenya":["Kenyan",["kenya","maasai","masai"],[]],"Kiribati":["Kiribati",["kiribati","gilbert"],[]],"Kosovo":["Kosovo",["kosov"],[]],"Kuwait":["Kuwaiti",["kuwait"],[]],"Kyrgyzstan":["Kyrgyz",["kyrgyz","kirghiz"],[]],"Laos":["Lao",["laos","lao"],[]],"Latvia":["Latvian",["latvia"],[]],"Lesotho":["Basotho",["lesotho","basotho","sotho"],[]],"Liberia":["Liberian",["liberia"],[]],"Libya":["Libyan",["libya"],[]],"Liechtenstein":["Liechtenstein",["liechtenstein"],[]],"Lithuania":["Lithuanian",["lithuania"],[]],"Luxembourg":["Luxembourg",["luxembourg"],[]],"Madagascar":["Malagasy",["madagascar","malagasy"],[]],"Malawi":["Malawi",["malawi"],[]],"Malaysia":["Malay",["malaysia","malay"],[]],"Maldives":["Maldives",["maldiv"],[]],"Mali":["Mali",["mali","bamana","bambara","dogon"],[]],"Malta":["Maltese",["malt"],[]],"Marshall Islands":["Marshall Islands",["marshall island"],[]],"Mauritania":["Mauritanian",["mauritania"],[]],"Mauritius":["Mauritius",["mauritius"],[]],"Micronesia":["Micronesian",["micronesia","caroline island"],[]],"Moldova":["Moldovan",["moldov"],[]],"Monaco":["Monaco",["monaco"],[]],"Mongolia":["Mongolian",["mongol"],[]],"Montenegro":["Montenegrin",["montenegr"],[]],"Morocco":["Moroccan",["morocc"],[]],"Mozambique":["Mozambique",["mozambique"],[]],"Myanmar":["Burmese",["myanmar","burm"],[]],"Namibia":["Namibian",["namibia","herero","himba"],[]],"Nauru":["Nauru",["nauru"],[]],"Nepal":["Nepalese",["nepal"],[]],"Netherlands":["Dutch",["netherlands","dutch"],[]],"New Zealand":["Maori",["new zealand","maori","māori"],[]],"Nicaragua":["Nicaraguan",["nicaragu"],[]],"Niger":["Niger",["niger"],["nigeria"]],"North Korea":["Korean",["korea"],[]],"North Macedonia":["Macedonian",["macedonia"],[]],"Norway":["Norwegian",["norw"],[]],"Oman":["Omani",["oman"],[]],"Pakistan":["Pakistani",["pakistan"],[]],"Palau":["Palau",["palau"],[]],"Panama":["Panamanian",["panam","kuna"],[]],"Papua New Guinea":["Papua New Guinea",["papua","new guinea"],[]],"Paraguay":["Paraguayan",["paraguay"],[]],"Peru":["Peruvian",["peru"],[]],"Poland":["Polish",["poland","polish"],[]],"Portugal":["Portuguese",["portug"],[]],"Qatar":["Qatari",["qatar"],[]],"Romania":["Romanian",["romania"],[]],"Russia":["Russian",["russia"],[]],"Rwanda":["Rwandan",["rwanda"],[]],"Saint Kitts and Nevis":["Saint Kitts",["kitts","nevis"],[]],"Saint Lucia":["Saint Lucia",["lucia"],[]],"Saint Vincent and the Grenadines":["Saint Vincent",["vincent","grenadine"],[]],"Samoa":["Samoan",["samoa"],[]],"San Marino":["San Marino",["san marino"],[]],"São Tomé and Príncipe":["Sao Tome",["tomé","tome"],[]],"Saudi Arabia":["Saudi Arabian",["saudi","arabia"],[]],"Senegal":["Senegalese",["senegal","wolof"],[]],"Serbia":["Serbian",["serbia"],[]],"Seychelles":["Seychelles",["seychell"],[]],"Sierra Leone":["Sierra Leone",["sierra leone","mende"],[]],"Singapore":["Singapore",["singapor"],[]],"Slovakia":["Slovak",["slovak"],[]],"Slovenia":["Slovenian",["sloven"],[]],"Solomon Islands":["Solomon Islands",["solomon"],[]],"Somalia":["Somali",["somal"],[]],"South Africa":["South African",["south africa","zulu","xhosa","ndebele"],[]],"South Sudan":["South Sudan",["south sudan","dinka","nuer"],[]],"Spain":["Spanish",["spain","spanish"],[]],"Sri Lanka":["Sri Lankan",["sri lanka","ceylon"],[]],"Sudan":["Sudanese",["sudan"],[]],"Suriname":["Suriname",["surinam"],[]],"Sweden":["Swedish",["swed"],[]],"Switzerland":["Swiss",["switzerland","swiss"],[]],"Syria":["Syrian",["syria"],[]],"Taiwan":["Taiwanese",["taiwan"],[]],"Tajikistan":["Tajik",["tajik"],[]],"Tanzania":["Tanzanian",["tanzania","zanzibar"],[]],"Thailand":["Thai",["thailand","thai"],[]],"Timor-Leste":["Timor",["timor"],[]],"Togo":["Togo",["togo","ewe"],[]],"Tonga":["Tongan",["tonga"],[]],"Trinidad and Tobago":["Trinidad",["trinidad","tobago"],[]],"Tunisia":["Tunisian",["tunisia"],[]],"Türkiye":["Turkish",["turkey","turkish","türkiye","ottoman"],[]],"Turkmenistan":["Turkmen",["turkmen"],[]],"Tuvalu":["Tuvalu",["tuvalu"],[]],"Uganda":["Ugandan",["uganda"],[]],"Ukraine":["Ukrainian",["ukrain"],[]],"United Arab Emirates":["Emirati",["emirates","emirati"],[]],"United Kingdom":["British",["united kingdom","british","england","english"],[]],"United States":["American",["united states","american"],[]],"Uruguay":["Uruguayan",["uruguay"],[]],"Uzbekistan":["Uzbek",["uzbek"],[]],"Vanuatu":["Vanuatu",["vanuatu","new hebrides"],[]],"Vatican City":["Vatican",["vatican"],[]],"Venezuela":["Venezuelan",["venezuela"],[]],"Vietnam":["Vietnamese",["vietnam"],[]],"Yemen":["Yemeni",["yemen"],[]],"Zambia":["Zambian",["zambia"],[]],"Zimbabwe":["Zimbabwean",["zimbabwe","shona"],[]],"Puerto Rico":["Puerto Rican",["puerto ric"],[]],"Greenland":["Greenland",["greenland","inuit"],[]],"Hong Kong":["Hong Kong",["hong kong"],[]],"Macau":["Macau",["macau","macao"],[]],"Guam":["Guam",["guam","chamorro"],[]],"Western Sahara":["Sahrawi",["sahara","sahrawi"],[]],"Scotland":["Scottish",["scotland","scottish"],[]],"Wales":["Welsh",["wales","welsh"],[]],"New Caledonia":["New Caledonia",["caledonia","kanak"],[]],"French Polynesia":["Tahitian",["polynesia","tahiti"],[]],"Aruba":["Aruba",["aruba"],[]],"Curaçao":["Curaçao",["curaçao","curacao"],[]],"Bermuda":["Bermuda",["bermuda"],[]],"Faroe Islands":["Faroese",["faroe"],[]],"Réunion":["Réunion",["réunion","reunion"],[]],"French Guiana":["French Guiana",["french guiana","guiana"],[]]};
+const tinfo=country=>{const t=TERMS[country];return t?{q:t[0],inc:t[1],exc:t[2]}:{q:country,inc:[country.toLowerCase()],exc:[]}};
+const hits=(txt,t)=>{txt=" "+String(txt||"").toLowerCase()+" ";return t.inc.some(w=>txt.includes(w))&&!t.exc.some(w=>txt.includes(w))};
+const getJSON=u=>fetch(u).then(r=>{if(!r.ok)throw new Error("http");return r.json()});
+const MET="https://collectionapi.metmuseum.org/public/collection/v1/";
+async function fromMet(q,t){
+  const ids=((await getJSON(MET+"search?hasImages=true&q="+encodeURIComponent(q))).objectIDs||[]).slice(0,12);
+  const objs=await Promise.all(ids.map(id=>getJSON(MET+"objects/"+id).catch(()=>null)));
+  return objs.filter(o=>o&&o.primaryImageSmall&&hits([o.culture,o.country,o.region,o.subregion,o.locale,o.city,o.title].join(" "),t))
+    .map(o=>({src:o.primaryImageSmall,title:o.title||o.objectName||"Object",date:o.objectDate||"",url:o.objectURL,by:"The Met"}))}
+async function fromAIC(q,t){
+  const j=await getJSON("https://api.artic.edu/api/v1/artworks/search?limit=12&fields=id,title,image_id,place_of_origin,date_display,artist_display&q="+encodeURIComponent(q));
+  return (j.data||[]).filter(a=>a.image_id&&hits([a.place_of_origin,a.title,a.artist_display].join(" "),t))
+    .map(a=>({src:"https://www.artic.edu/iiif/2/"+a.image_id+"/full/400,/0/default.jpg",title:a.title||"Object",date:a.date_display||"",url:"https://www.artic.edu/artworks/"+a.id,by:"Art Institute of Chicago"}))}
+async function fromCMA(q,t){
+  const j=await getJSON("https://openaccess-api.clevelandart.org/api/artworks/?has_image=1&limit=12&q="+encodeURIComponent(q));
+  return (j.data||[]).filter(a=>a.images&&a.images.web&&hits([(a.culture||[]).join(" "),a.title].join(" "),t))
+    .map(a=>({src:a.images.web.url,title:a.title||"Object",date:a.creation_date||"",url:a.url,by:"Cleveland Museum of Art"}))}
+const photoCache={};
+const words=item=>{const m=item.match(/\(([^)]+)\)/);return{base:item.split(" (")[0].trim(),desc:m?m[1].replace(/\b(a|an|the)\b/gi,"").replace(/\s+/g," ").trim():""}};
+async function museumSearch(q,t,out,seen){let ok=false;
+  const res=await Promise.allSettled([fromMet(q,t),fromAIC(q,t),fromCMA(q,t)]);
+  for(const r of res){if(r.status!=="fulfilled")continue;ok=true;for(const p of r.value){if(!seen.has(p.src)){seen.add(p.src);out.push(p)}}}
+  return ok}
+async function museumPhotos(item,country){
+  const key=item+"|"+country;if(photoCache[key])return photoCache[key];
+  const t=tinfo(country),{base,desc}=words(item),out=[],seen=new Set();let ok=false;
+  for(const q of [...new Set([desc&&desc+" "+t.q,base+" "+t.q].filter(Boolean))]){ok=(await museumSearch(q,t,out,seen))||ok;if(out.length>=4)break}
+  let related=false;
+  if(!out.length){for(const q of [t.q+" costume",t.q+" textile"]){ok=(await museumSearch(q,t,out,seen))||ok;if(out.length>=2)break}related=out.length>0}
+  if(!ok)throw new Error("offline");
+  return photoCache[key]={list:out.slice(0,4),related}}
+function show(btn){
   if(!view)build();
   const host=document.getElementById("drawer")||document.body;if(view.parentNode!==host)host.append(view);
   lastBtn=btn;const item=btn.dataset.cloth,country=btn.dataset.cn,my=++token;
   view.querySelector("#cv-t").textContent=item;view.querySelector(".cv-c").textContent="Traditional clothing · "+country;
+  const {base,desc}=words(item);
+  const q=encodeURIComponent((desc||base)+" "+tinfo(country).q);
+  const com=COMMUNITY[country]||[];
+  const links=(com.length?'<p class="cv-sec">From the community</p><div class="cv-links">'+com.map(c=>row(c[0],c[1],c[2])).join("")+'</div>':"")+
+    '<p class="cv-sec">Explore more in museum collections</p><div class="cv-links">'+MUSEUMS.map(m=>row(m[0],m[1],m[2](q))).join("")+'</div>';
   const body=view.querySelector(".cv-body");
-  const commons="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=image&search="+encodeURIComponent(item.split(" (")[0]+" "+country);
-  const more='<p class="cv-more">Want more? <a href="'+commons+'" target="_blank" rel="noopener">Browse photos on Wikimedia Commons</a></p>';
-  body.innerHTML='<div class="cv-grid"><div class="cv-skel"></div><div class="cv-skel"></div><div class="cv-skel"></div></div>';
+  body.innerHTML='<div class="cv-photos"><div class="cv-grid"><div class="cv-skel"></div><div class="cv-skel"></div></div></div>'+links;
   view.hidden=false;view.querySelector(".cv-x").focus();
-  let list;
-  try{list=await photos(item,country)}catch(err){list=null}
-  if(my!==token)return;
-  if(!list||!list.length){
-    body.innerHTML='<p class="cv-msg">'+(list?"We couldn't find a good photo for this one yet.":"Photos couldn't load here right now.")+'</p>'+more;return;
-  }
-  body.innerHTML='<div class="cv-grid">'+list.map(p=>'<figure><img class="cv-img" src="'+e2(p.src)+'" alt="'+e2(p.title)+'" loading="lazy" referrerpolicy="no-referrer"><figcaption>From Wikipedia: <a href="'+e2(p.url)+'" target="_blank" rel="noopener">'+e2(p.title)+'</a></figcaption></figure>').join("")+'</div>'+more;
-  body.querySelectorAll(".cv-img").forEach(img=>img.onerror=()=>{const f=img.closest("figure");if(f)f.remove();if(!body.querySelector("figure"))body.innerHTML='<p class="cv-msg">Photos couldn\'t load here right now.</p>'+more});
+  const ph=body.querySelector(".cv-photos");
+  museumPhotos(item,country).then(r=>{if(my!==token)return;const list=r.list;
+    if(!list.length){ph.innerHTML='<p class="cv-msg">Museums don\'t have a photo of this one yet. Try the collections below.</p>';return}
+    ph.innerHTML='<p class="cv-sec">'+(r.related?"Related pieces from "+e2(country)+" in museums":"Photos from museum collections")+'</p>'+(r.related?'<p class="cv-note">We couldn\'t find this exact item, so here are other traditional pieces from '+e2(country)+'.</p>':"")+'<div class="cv-grid">'+list.map(p=>'<figure><a href="'+e2(p.url)+'" target="_blank" rel="noopener"><img class="cv-img" src="'+e2(p.src)+'" alt="'+e2(p.title)+'" loading="lazy" referrerpolicy="no-referrer"></a><figcaption><a href="'+e2(p.url)+'" target="_blank" rel="noopener">'+e2(p.title)+'</a>'+(p.date?' · '+e2(p.date):"")+'<span class="cv-by">'+e2(p.by)+'</span></figcaption></figure>').join("")+'</div>';
+    ph.querySelectorAll(".cv-img").forEach(img=>img.onerror=()=>{const f=img.closest("figure");if(f)f.remove();if(!ph.querySelector("figure"))ph.innerHTML=""})
+}).catch(()=>{if(my!==token)return;ph.innerHTML='<p class="cv-msg">Photos can\'t show in this view. They appear on your live site. Explore the collections below in the meantime.</p>'});
 }
+
+/* owner tool: open the site with #photocheck to test museum photos for every clothing item */
+(function(){
+  async function run(){const all=[];C.forEach(c=>((CL[c.id]||{}).items||[]).forEach(it=>all.push([c.name,it])));
+    const box=document.createElement("div");box.id="photocheck";box.innerHTML='<div class="pc-in"><h2>Museum photo check</h2><p id="pc-s">Starting…</p><div id="pc-r"></div><button class="small" id="pc-x">Close</button></div>';
+    document.body.appendChild(box);box.querySelector("#pc-x").onclick=()=>{box.remove();stop=true;try{history.replaceState(null,"",location.pathname)}catch(e){}};
+    let stop=false,done=0;const exact=[],rel=[],none=[],err=[];
+    const show=()=>{box.querySelector("#pc-s").textContent=`Checked ${done} of ${all.length} items · ${exact.length} with photos · ${rel.length} related only · ${none.length} nothing${err.length?" · "+err.length+" errors":""}`;
+      box.querySelector("#pc-r").innerHTML=(none.length?'<h3>No photos at all</h3><p>'+none.map(x=>e2(x[0]+": "+x[1])).join("<br>")+'</p>':"")+(rel.length?'<h3>Related pieces only</h3><p>'+rel.map(x=>e2(x[0]+": "+x[1])).join("<br>")+'</p>':"")+(err.length?'<h3>Could not check</h3><p>'+err.map(x=>e2(x[0]+": "+x[1])).join("<br>")+'</p>':"")};
+    let i=0;const worker=async()=>{while(!stop&&i<all.length){const x=all[i++];try{const r=await museumPhotos(x[1],x[0]);(r.list.length?(r.related?rel:exact):none).push(x)}catch(e){err.push(x)}done++;show()}};
+    await Promise.all([worker(),worker()]);if(!stop)box.querySelector("#pc-s").textContent+=" · Done";}
+  const want=()=>/photocheck/.test(location.hash+location.search);
+  const go=()=>{if(!document.getElementById("photocheck"))run()};
+  if(want())setTimeout(go,800);
+  window.addEventListener("hashchange",()=>{if(want())go()});
+})();
 document.addEventListener("click",e=>{const b=e.target.closest(".clothbtn");if(b){e.preventDefault();show(b)}});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&view&&!view.hidden){e.stopImmediatePropagation();e.preventDefault();hide()}},true);
+})();
+</script>
+
+<script>
+/* friendlier drawer: swipe between sections, keep section across countries, tab keys, collapsing header */
+(function(){
+  const tabs=document.getElementById("layers"),body=document.getElementById("dbody");
+  const go=(n,dir)=>{if(!cur||n<0||n>6||n===layer)return;layer=n;renderLayer();
+    body.classList.remove("from-right","from-left");void body.offsetWidth;body.classList.add(dir>0?"from-right":"from-left");
+    const t=tabs.querySelector(`[data-l="${n}"]`);if(t)t.scrollIntoView({block:"nearest",inline:"center"});
+    if(navigator.vibrate)try{navigator.vibrate(8)}catch(e){}};
+  /* swipe left/right on the content */
+  let sx=null,sy=null,skip=false;
+  const scroller=el=>{for(;el&&el!==body;el=el.parentElement){if(el.scrollWidth>el.clientWidth+4){const o=getComputedStyle(el).overflowX;if(o==="auto"||o==="scroll")return true}}return false};
+  body.addEventListener("touchstart",e=>{if(e.touches.length!==1){sx=null;return}const t=e.target;
+    skip=!!t.closest("input,textarea,select,audio,video,iframe")||scroller(t);sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  body.addEventListener("touchend",e=>{if(sx===null||skip){sx=null;return}const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.8){go(layer+(dx<0?1:-1),dx<0?1:-1);done()}},{passive:true});
+  /* tablist keyboard pattern */
+  tabs.addEventListener("keydown",e=>{const k=e.key;let n=null;
+    if(k==="ArrowRight")n=layer+1;else if(k==="ArrowLeft")n=layer-1;else if(k==="Home")n=0;else if(k==="End")n=6;
+    if(n===null)return;e.preventDefault();n=Math.max(0,Math.min(6,n));go(n,n>layer?1:-1);const t=tabs.querySelector(`[data-l="${layer}"]`);if(t)t.focus()});
+  const rove=()=>tabs.querySelectorAll("button").forEach(b=>b.tabIndex=(+b.dataset.l===layer)?0:-1);
+  const rl=renderLayer;renderLayer=function(){const r=rl.apply(this,arguments);rove();return r};
+  /* stay on the same section when moving country to country */
+  let keep=null;["dprev","dnext"].forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener("click",()=>{keep=layer},true)});
+  const o=open;open=function(){const k=keep;keep=null;const r=o.apply(this,arguments);if(k&&cur){layer=k;renderLayer()}return r};
+  /* header tucks away while reading, comes back near the top */
+  body.addEventListener("scroll",()=>{const y=body.scrollTop;if(y>70)drawer.classList.add("compact");else if(y<8)drawer.classList.remove("compact")},{passive:true});
+  const rl2=renderLayer;renderLayer=function(){const r=rl2.apply(this,arguments);drawer.classList.remove("compact");return r};
+  /* one-time tip on phones */
+  let shown=false;try{shown=localStorage.getItem("cc-swipehint")==="1"}catch(e){}
+  function done(){shown=true;try{localStorage.setItem("cc-swipehint","1")}catch(e){}const h=drawer.querySelector(".swipehint");if(h)h.classList.add("gone")}
+  const touch=window.matchMedia&&matchMedia("(pointer:coarse)").matches;
+  const o2=open;open=function(){const r=o2.apply(this,arguments);
+    if(touch&&!shown&&cur&&!drawer.querySelector(".swipehint")){const h=document.createElement("div");h.className="swipehint";h.textContent="Tip: swipe left or right to switch sections";drawer.appendChild(h);
+      setTimeout(()=>{h.classList.add("gone");setTimeout(()=>h.remove(),500)},4200);shown=true;try{localStorage.setItem("cc-swipehint","1")}catch(e){}}
+    return r};
+  rove();
 })();
 </script>
 </body></html>
