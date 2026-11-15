@@ -4824,7 +4824,7 @@ function renderLayer(){const c=cur;
       ${nxt(1)}`;
   }else if(layer===2){
     const cl=CL[c.id];
-    h=`${cl?`<div class="part"><h3>Traditional clothing</h3>${chips(cl.items,"food cloth")}<p style="margin-top:10px">${esc(cl.text)}</p></div>`:`<p class="tiny">Traditional clothing for ${esc(c.name)} is coming soon.</p>`}
+    h=`${cl?`<div class="part"><h3>Traditional clothing</h3><div class="foods">${cl.items.map(f=>`<button type="button" class="food cloth clothbtn" data-cloth="${esc(f)}" data-cn="${esc(c.name)}" aria-label="See photos of ${esc(f)}">${esc(f)}<svg class="camico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.6"/></svg></button>`).join("")}</div><p class="tiny cloth-hint">Tap an item to see photos.</p><p style="margin-top:10px">${esc(cl.text)}</p></div>`:`<p class="tiny">Traditional clothing for ${esc(c.name)} is coming soon.</p>`}
       <div class="part"><h3>What to wear as a visitor</h3><p>${esc(x.dress||"")}</p></div>
       ${nxt(2)}`;
   }else if(layer===3){
@@ -5370,4 +5370,88 @@ document.addEventListener("click",e=>{const b=e.target.closest(".lp-print");if(!
   el.innerHTML="";const top=document.createElement("p");top.className="lpp-top";top.textContent=b.dataset.country+" · "+b.dataset.grade+" · Culture Connects";
   const t=document.createElement("h1");t.textContent=h;el.append(top,t,body);
   document.body.classList.add("lesson-on");const done=()=>{document.body.classList.remove("lesson-on");removeEventListener("afterprint",done)};addEventListener("afterprint",done);window.print();setTimeout(done,1500)});
-</script></body></html>
+</script><style>
+.clothbtn{display:inline-flex;align-items:center;gap:6px;background:transparent;color:inherit;cursor:pointer;line-height:1.25;text-align:left}
+.clothbtn:hover,.clothbtn:focus-visible{background:var(--rc);color:#0B1520;outline:none}
+.camico{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;opacity:.75}
+.cloth-hint{margin:8px 0 0;color:var(--muted)}
+#clothview{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:16px}
+#clothview[hidden]{display:none}
+#clothview .cv-scrim{position:absolute;inset:0;background:rgba(5,12,20,.6)}
+#clothview .cv-box{position:relative;background:var(--surface);color:var(--ink);width:min(640px,100%);max-height:calc(100% - 32px);overflow:auto;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+#clothview .cv-head{position:sticky;top:0;z-index:1;background:var(--rc);color:#0B1520;padding:16px 56px 14px 18px}
+#clothview .cv-head h3{margin:0;font-size:1.2rem;line-height:1.2}
+#clothview .cv-head p{margin:3px 0 0;font-family:var(--display);font-size:.85rem;font-weight:700;opacity:.75}
+#clothview .cv-x{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.55);color:#0B1520;font-size:1.3rem;line-height:1;cursor:pointer}
+#clothview .cv-body{padding:16px 18px 18px}
+#clothview .cv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+#clothview figure{margin:0}
+#clothview .cv-img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;background:var(--soft)}
+#clothview .cv-skel{aspect-ratio:3/4;border-radius:12px;background:var(--soft)}
+@media (prefers-reduced-motion:no-preference){#clothview .cv-skel{animation:cvpulse 1.2s ease-in-out infinite alternate}}
+@keyframes cvpulse{from{opacity:.55}to{opacity:1}}
+#clothview figcaption{margin-top:6px;font-size:.82rem;color:var(--muted)}
+#clothview figcaption a,#clothview .cv-more a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+#clothview .cv-more{margin:14px 0 0;font-size:.85rem;color:var(--muted)}
+#clothview .cv-msg{margin:0 0 6px}
+@media (max-width:520px){#clothview{padding:0;align-items:flex-end}#clothview .cv-box{max-height:88%;border-radius:20px 20px 0 0}#clothview .cv-grid{grid-template-columns:1fr 1fr}}
+
+/* bigger topic headings in country panels */
+.label{font-size:.9rem!important;letter-spacing:.1em!important}
+.part h3,.box h3{font-size:1.35rem!important;line-height:1.25;margin-bottom:8px!important}
+
+/* passport removed: less clutter */
+#passport,#dstamp{display:none!important}
+</style>
+<script>
+(()=>{
+const cache={};
+const e2=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const SKIP=/(Flag_of|Coat_of_arms|Emblem_of|locator|_map|Map_of|Location_|\.svg)/i;
+async function search(q){
+  const u="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|info&inprop=url&piprop=thumbnail&pithumbsize=640&gsrsearch="+encodeURIComponent(q);
+  const r=await fetch(u);if(!r.ok)throw new Error("http");const j=await r.json();
+  const pages=Object.values((j.query&&j.query.pages)||{}).sort((a,b)=>a.index-b.index);
+  return pages.filter(p=>p.thumbnail&&p.thumbnail.source&&!SKIP.test(p.thumbnail.source)).map(p=>({src:p.thumbnail.source,title:p.title,url:p.fullurl||("https://en.wikipedia.org/wiki/"+encodeURIComponent(p.title))}));
+}
+async function photos(item,country){
+  const key=item+"|"+country;if(cache[key])return cache[key];
+  const base=item.split(" (")[0].trim();
+  let out=[];
+  for(const q of [base+" "+country,base+" clothing",base]){
+    try{for(const p of await search(q)){if(!out.some(o=>o.src===p.src))out.push(p)}}catch(err){if(!out.length&&q===base)throw err}
+    if(out.length>=3)break;
+  }
+  return cache[key]=out.slice(0,3);
+}
+let view,lastBtn,token=0;
+function build(){
+  view=document.createElement("div");view.id="clothview";view.hidden=true;
+  view.innerHTML='<div class="cv-scrim"></div><div class="cv-box" role="dialog" aria-modal="true" aria-labelledby="cv-t"><div class="cv-head"><h3 id="cv-t"></h3><p class="cv-c"></p><button type="button" class="cv-x" aria-label="Close photos">&times;</button></div><div class="cv-body"></div></div>';
+  view.querySelector(".cv-scrim").onclick=hide;view.querySelector(".cv-x").onclick=hide;
+}
+function hide(){if(!view||view.hidden)return;view.hidden=true;token++;if(lastBtn&&lastBtn.isConnected)lastBtn.focus()}
+async function show(btn){
+  if(!view)build();
+  const host=document.getElementById("drawer")||document.body;if(view.parentNode!==host)host.append(view);
+  lastBtn=btn;const item=btn.dataset.cloth,country=btn.dataset.cn,my=++token;
+  view.querySelector("#cv-t").textContent=item;view.querySelector(".cv-c").textContent="Traditional clothing · "+country;
+  const body=view.querySelector(".cv-body");
+  const commons="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=image&search="+encodeURIComponent(item.split(" (")[0]+" "+country);
+  const more='<p class="cv-more">Want more? <a href="'+commons+'" target="_blank" rel="noopener">Browse photos on Wikimedia Commons</a></p>';
+  body.innerHTML='<div class="cv-grid"><div class="cv-skel"></div><div class="cv-skel"></div><div class="cv-skel"></div></div>';
+  view.hidden=false;view.querySelector(".cv-x").focus();
+  let list;
+  try{list=await photos(item,country)}catch(err){list=null}
+  if(my!==token)return;
+  if(!list||!list.length){
+    body.innerHTML='<p class="cv-msg">'+(list?"We couldn't find a good photo for this one yet.":"Photos couldn't load here right now.")+'</p>'+more;return;
+  }
+  body.innerHTML='<div class="cv-grid">'+list.map(p=>'<figure><img class="cv-img" src="'+e2(p.src)+'" alt="'+e2(p.title)+'" loading="lazy" referrerpolicy="no-referrer"><figcaption>From Wikipedia: <a href="'+e2(p.url)+'" target="_blank" rel="noopener">'+e2(p.title)+'</a></figcaption></figure>').join("")+'</div>'+more;
+  body.querySelectorAll(".cv-img").forEach(img=>img.onerror=()=>{const f=img.closest("figure");if(f)f.remove();if(!body.querySelector("figure"))body.innerHTML='<p class="cv-msg">Photos couldn\'t load here right now.</p>'+more});
+}
+document.addEventListener("click",e=>{const b=e.target.closest(".clothbtn");if(b){e.preventDefault();show(b)}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&view&&!view.hidden){e.stopImmediatePropagation();e.preventDefault();hide()}},true);
+})();
+</script>
+</body></html>
